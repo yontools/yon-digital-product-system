@@ -1,3 +1,8 @@
+---
+name: ux
+description: UX review and interaction guidance for navigation, hierarchy, workflows, forms, feedback, responsive behavior, accessibility, and reducing friction.
+---
+
 # UX
 
 ## Objetivo
