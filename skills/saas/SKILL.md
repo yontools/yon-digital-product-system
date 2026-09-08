@@ -1,3 +1,8 @@
+---
+name: saas
+description: SaaS product guidance for roles, permissions, onboarding, dashboards, CRUD, search, filters, tables, workflows, notifications, billing, security, and operational efficiency.
+---
+
 # SaaS
 
 ## Objetivo
