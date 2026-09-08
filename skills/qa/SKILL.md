@@ -1,3 +1,8 @@
+---
+name: qa
+description: QA guidance for verifying real product behavior, navigation, forms, validation, loading/error states, permissions, responsive behavior, accessibility, console errors, performance, and critical actions.
+---
+
 # QA
 
 ## Objetivo
