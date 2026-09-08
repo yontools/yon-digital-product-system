@@ -1,3 +1,8 @@
+---
+name: product-design
+description: Product design guidance for understanding users, goals, workflows, constraints, and the smallest useful product surface. Use when designing or changing product behavior.
+---
+
 # Product Design
 
 ## Objetivo
