@@ -1,3 +1,8 @@
+---
+name: ui
+description: UI quality guidance for typography, hierarchy, spacing, contrast, components, interaction states, responsive behavior, and visual consistency.
+---
+
 # UI
 
 ## Objetivo
