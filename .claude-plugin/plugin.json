@@ -1,10 +1,21 @@
 {
   "name": "yon-digital-product-system",
   "description": "YON Digital Product System: a reusable product-engineering operating system for designing, building, improving, and verifying digital products.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "YON"
   },
   "repository": "https://github.com/yontools/yon-digital-product-system",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "product-design",
+    "ux",
+    "ui",
+    "saas",
+    "web",
+    "qa",
+    "claude-code",
+    "agent-skills"
+  ],
+  "category": "development"
 }
