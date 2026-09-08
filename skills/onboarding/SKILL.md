@@ -1,3 +1,8 @@
+---
+name: onboarding
+description: Onboarding guidance for helping users reach first value quickly without unnecessary friction, including defaults, progressive setup, imports, contextual help, and real first-task guidance.
+---
+
 # Onboarding
 
 El onboarding debe aparecer cuando ayuda al usuario a alcanzar valor más rápido. No convertirlo en una barrera obligatoria sin necesidad.
