@@ -20,6 +20,18 @@ Useful when resources are assigned temporarily and deadlines drive operations.
 
 Useful when distributed teams need location-aware operational workflows.
 
+## Multi-user SaaS
+
+`Roles & Permissions + Customer Management + Audit History`
+
+Useful when organizations have multiple users with differentiated access and need traceability for important actions.
+
+## Workflow-driven operations
+
+`Workflow Engine + Notifications + Audit History`
+
+Useful when state transitions trigger communication and important actions must remain traceable.
+
 ## Rule
 
 These combinations are starting hypotheses, not automatic architecture decisions. YON must still inspect the specific product, users, constraints, and existing code before selecting or implementing capabilities.
