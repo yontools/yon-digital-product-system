@@ -6,6 +6,48 @@ disable-model-invocation: true
 
 # YON Build
 
-Understand the goal, users, roles, workflows, constraints, and success criteria. Define the smallest useful product surface. Establish information architecture and primary flows before expanding scope. Design important states. Choose architecture appropriate to the repository. Build reusable components and consistent interactions. Treat responsive behavior and accessibility as part of implementation. Run early, inspect the real product, correct issues, and verify the critical journey end-to-end.
+YON Build turns an understood product request into a verified implementation. For broad or multi-workflow products, a Product Blueprint is the contract between product understanding and implementation.
 
-Avoid feature inflation, unnecessary dependencies, fake functionality, placeholder UX in production paths, and generic decoration without product purpose.
+## Build sequence
+
+`UNDERSTAND → DISCOVER → RESOLVE → BLUEPRINT → IMPLEMENT → RUN → VERIFY`
+
+### 1. Understand
+
+Identify the goal, users, participants, roles, relationships, primary jobs, critical workflows, constraints, success criteria, existing behavior, and project-local instructions.
+
+### 2. Discover
+
+Use `yon-capability-discovery` when the request spans multiple reusable behaviors or when the product model is unfamiliar. Search capabilities, patterns, and evidence. Classify matches and identify genuine gaps.
+
+### 3. Resolve
+
+Use `yon-capability-resolver` to select the smallest justified composition. Do not force matches or silently turn optional capabilities into requirements.
+
+### 4. Blueprint
+
+For broad products, create or update a Product Blueprint using `blueprints/BLUEPRINT-TEMPLATE.md`. The Blueprint should make participants, relationships, workflows, entities, lifecycle, capability composition, patterns, gaps, product-specific behavior, risks, implementation order, and verification gates explicit.
+
+A Blueprint is a decision contract, not an automatic architecture or database schema. It must not override project-local constraints or justify unnecessary changes to working behavior.
+
+### 5. Implement
+
+Define the smallest useful product surface. Establish information architecture and primary flows before expanding scope. Build reusable components and consistent interactions. Design loading, empty, success, error, permission, and edge states. Treat responsive behavior and accessibility as part of implementation.
+
+Choose architecture appropriate to the repository. Reuse existing architecture and components where appropriate. Avoid feature inflation, unnecessary dependencies, fake functionality, placeholder UX in production paths, and generic decoration without product purpose.
+
+### 6. Run / Inspect / Correct
+
+Run the real product as early as practical. Exercise critical workflows, inspect browser/runtime behavior, console/network failures, responsive states, and relevant accessibility behavior. Correct regressions rather than declaring success from source code alone.
+
+### 7. Verify
+
+Use `validation/INDEX.md` to select proportional gates. Verify the original user outcome end-to-end. Record meaningful findings as evidence when they can support future reusable knowledge.
+
+## High-risk changes
+
+Authentication, authorization, billing, destructive operations, migrations, security controls, external integrations, tenancy/isolation, and core business rules require stronger understanding and verification.
+
+## Completion
+
+A build is complete only when the affected user journey works in the running product, important states are handled, responsive/accessibility concerns have been considered, relevant runtime/security boundaries are verified, and the implementation remains consistent with the approved product intent.
