@@ -6,7 +6,7 @@ Machine-oriented index of reusable product capabilities.
 
 Use this index to discover candidate capabilities before designing or implementing product behavior. The index is a discovery aid, not an architecture generator.
 
-Classifications produced by the Capability Resolver:
+Classifications produced by Discovery/Resolver:
 
 - `DIRECT` — clearly required.
 - `SUPPORTING` — enables another required behavior.
@@ -18,7 +18,7 @@ Classifications produced by the Capability Resolver:
 
 | Name | File | Status | Domains |
 |---|---|---|---|
-| Party & Relationship Management | `party-relationship-management.md` | experimental | identity, relationships, organizations, roles, customers |
+| Party & Relationship Management | `party-relationship-management.md` | experimental | identity, relationships, organizations, participants, memberships |
 | Asset Management | `asset-management.md` | experimental | assets, operations |
 | Audit History | `audit-history.md` | experimental | operations, compliance, debugging, security |
 | Geolocation & Tracking | `geolocation-tracking.md` | experimental | location, tracking, field operations |
@@ -36,6 +36,10 @@ Classifications produced by the Capability Resolver:
 4. Treat `experimental` capabilities as candidates requiring validation.
 5. If no capability fits without distortion, report `MISSING` rather than forcing a match.
 6. Never use this index to import private project implementation details.
+
+## Relationship principle
+
+Participants are reusable across contexts; roles and relationships are contextual. Authorization remains a separate concern. Domain capabilities should reference participants rather than duplicate participant semantics.
 
 ## Privacy
 
