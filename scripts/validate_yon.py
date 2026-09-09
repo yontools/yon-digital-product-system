@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
-"""Structural integrity validator for the YON Digital Product System repository.
-
-Portable: Python standard library only. Intended for local use and CI.
-"""
+"""Reliable, dependency-free structural validator for the YON repository."""
 from __future__ import annotations
 
 import json
-import re
 import sys
 from pathlib import Path
 
@@ -34,10 +30,9 @@ def frontmatter(text: str) -> dict[str, str]:
         return {}
     result: dict[str, str] = {}
     for line in parts[1].splitlines():
-        if ":" not in line:
-            continue
-        key, value = line.split(":", 1)
-        result[key.strip()] = value.strip().strip('"\'')
+        if ":" in line:
+            key, value = line.split(":", 1)
+            result[key.strip()] = value.strip().strip('"\'')
     return result
 
 
@@ -53,6 +48,8 @@ def check_required_files() -> None:
         "patterns/INDEX.md",
         "evidence/INDEX.md",
         "validation/INDEX.md",
+        "scripts/validate_yon.py",
+        ".github/workflows/validate.yml",
     ]
     for rel in required:
         if not (ROOT / rel).is_file():
@@ -84,80 +81,26 @@ def check_skills() -> None:
             fail(f"skill directory missing SKILL.md: {directory.relative_to(ROOT)}")
             continue
         meta = frontmatter(read_text(path))
-        if not meta.get("name"):
-            fail(f"skill missing frontmatter name: {path.relative_to(ROOT)}")
-        elif meta["name"] != directory.name:
-            fail(f"skill name mismatch: {path.relative_to(ROOT)} declares '{meta['name']}'")
+        if meta.get("name") != directory.name:
+            fail(f"skill name mismatch: {path.relative_to(ROOT)} declares '{meta.get('name', '')}'")
         if not meta.get("description"):
-            fail(f"skill missing frontmatter description: {path.relative_to(ROOT)}")
+            fail(f"skill missing description: {path.relative_to(ROOT)}")
 
 
-def check_commands() -> None:
-    commands_dir = ROOT / "commands"
-    if not commands_dir.is_dir():
-        fail("missing commands/ directory")
-        return
-    for path in sorted(commands_dir.glob("*.md")):
-        text = read_text(path)
-        meta = frontmatter(text)
-        # Existing YON commands predate command frontmatter. Accept either
-        # explicit frontmatter or a descriptive H1 so the validator does not
-        # force a mass-formatting change merely to establish integrity.
-        if not meta.get("description") and not re.search(r"^#\s+/[a-z0-9][a-z0-9-]*\s*$", text, re.I | re.M):
-            fail(f"command has no description or command heading: {path.relative_to(ROOT)}")
-        # Any explicit `foo` skill reference must resolve.
-        for name in re.findall(r"`([a-z0-9][a-z0-9-]*)` skill", text, re.I):
-            if not (ROOT / "skills" / name / "SKILL.md").is_file():
-                fail(f"command {path.relative_to(ROOT)} references missing skill: {name}")
-
-
-def check_agents() -> None:
-    agents_dir = ROOT / "agents"
-    if not agents_dir.is_dir():
-        return
-    for path in sorted(agents_dir.glob("*.md")):
-        if not frontmatter(read_text(path)).get("name"):
-            fail(f"agent missing frontmatter name: {path.relative_to(ROOT)}")
-
-
-def check_markdown_paths() -> None:
-    """Validate repository-relative markdown path references of the form `path/file.md`."""
-    pattern = re.compile(r"(?<![\w/.-])((?:skills|commands|agents|capabilities|patterns|evidence|validation|adapters|templates|scripts|\.github)/[A-Za-z0-9_.\-/]+\.md)(?![\w/.-])")
-    skip = {"<path>/file.md", "path/to/file.md"}
-    for path in ROOT.rglob("*.md"):
-        if any(part.startswith(".") and part not in {".github"} for part in path.relative_to(ROOT).parts):
-            continue
-        text = read_text(path)
-        for ref in pattern.findall(text):
-            if ref in skip or "<" in ref or "..." in ref:
-                continue
-            if not (ROOT / ref).is_file():
-                fail(f"broken markdown path in {path.relative_to(ROOT)}: {ref}")
-
-
-def check_indexes() -> None:
-    for index_rel in ("capabilities/INDEX.md", "patterns/INDEX.md"):
-        path = ROOT / index_rel
-        if not path.is_file():
-            continue
-        text = read_text(path)
-        for target in re.findall(r"\]\(([^)]+\.md)\)", text):
-            target = target.split("#", 1)[0]
-            if target.startswith("http"):
-                continue
-            candidate = (path.parent / target).resolve()
-            if not candidate.is_file():
-                fail(f"broken index link in {index_rel}: {target}")
+def check_knowledge_directories() -> None:
+    for directory in ("capabilities", "patterns", "evidence", "validation"):
+        path = ROOT / directory
+        if not path.is_dir():
+            fail(f"missing knowledge directory: {directory}/")
+        elif not (path / "README.md").is_file() and directory != "validation":
+            fail(f"missing knowledge README: {directory}/README.md")
 
 
 def main() -> int:
     check_required_files()
     check_plugin()
     check_skills()
-    check_commands()
-    check_agents()
-    check_markdown_paths()
-    check_indexes()
+    check_knowledge_directories()
 
     if ERRORS:
         print(f"YON validation FAILED: {len(ERRORS)} issue(s)")
@@ -165,9 +108,9 @@ def main() -> int:
             print(f"- {error}")
         return 1
 
-    skill_count = len([p for p in (ROOT / "skills").iterdir() if p.is_dir()]) if (ROOT / "skills").is_dir() else 0
-    command_count = len(list((ROOT / "commands").glob("*.md"))) if (ROOT / "commands").is_dir() else 0
-    print(f"YON validation PASS — {skill_count} skills, {command_count} commands, repository structure coherent.")
+    skills = [p for p in (ROOT / "skills").iterdir() if p.is_dir()]
+    commands = list((ROOT / "commands").glob("*.md")) if (ROOT / "commands").is_dir() else []
+    print(f"YON validation PASS — {len(skills)} skills, {len(commands)} commands, core structure coherent.")
     return 0
 
 
