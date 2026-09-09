@@ -1,6 +1,6 @@
 # YON Digital Product System
 
-Sistema abierto de metodología, skills, patrones, capacidades y agentes para diseñar, construir, mejorar y verificar productos digitales.
+Sistema abierto de metodología, skills, patrones, capacidades, evidencia y agentes para diseñar, construir, mejorar y verificar productos digitales.
 
 ## Qué es YON
 
@@ -49,6 +49,8 @@ Para ver la guía completa: `INSTALL-CLAUDE-CODE.md`.
 - `yon-visual` — inteligencia visual
 - `yon-motion` — motion y microinteracciones
 - `yon-qa` — verificación del producto real
+- `yon-capability-resolver` — composición de capacidades reutilizables
+- `yon-extract` — extracción deliberada de conocimiento generalizable desde evidencia
 
 Las skills especializadas de `product-design`, `ux`, `ui`, `saas`, `onboarding` y `qa` aportan conocimiento reutilizable adicional.
 
@@ -87,6 +89,14 @@ Una solución de un proyecto privado puede inspirar una capability pública, per
 
 Los patrones resuelven problemas recurrentes de producto e interfaz y documentan contexto, solución, variantes, trade-offs, accesibilidad, responsive y verificación.
 
+## Evidencia y evolución
+
+La evidencia conecta el trabajo real con el conocimiento reutilizable. Puede registrar observaciones, feedback, experimentos, verificaciones de runtime, regresiones y resultados de producción.
+
+La evidencia no convierte automáticamente una solución en `PROVEN`. YON distingue hechos observados de inferencias y exige revisión antes de promover conocimiento.
+
+Cuando una solución parece reutilizable, `yon-extract` puede generar un candidato de pattern o capability. La extracción y la publicación son pasos deliberadamente separados.
+
 ## Privacidad
 
 Este repositorio es público. No debe contener secretos, credenciales, datos privados de clientes, prompts privados, código propietario ni reglas de negocio identificables de Yontools, Vantto u otros proyectos privados.
@@ -111,6 +121,8 @@ skills/
 ├── yon-visual/
 ├── yon-motion/
 ├── yon-qa/
+├── yon-capability-resolver/
+├── yon-extract/
 ├── product-design/
 ├── ux/
 ├── ui/
@@ -126,6 +138,8 @@ agents/
 
 capabilities/
 patterns/
+evidence/
+validation/
 commands/
 adapters/
 ```
@@ -133,3 +147,5 @@ adapters/
 ## Estado
 
 YON está en evolución. Las capacidades y patrones usan estados como `experimental`, `proven` y `deprecated` para diferenciar ideas de soluciones con evidencia.
+
+La evidencia usa `UNVERIFIED`, `SUPPORTED`, `STRONG` y `CONTRADICTED` para expresar cuánto respalda una afirmación. Son sistemas distintos y no deben confundirse.
