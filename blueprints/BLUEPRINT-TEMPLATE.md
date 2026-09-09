@@ -1,87 +1,160 @@
 # YON Product Blueprint
 
-> Decision contract between product understanding and implementation. Not an automatic architecture.
+> Decision contract between product understanding and implementation. Not an automatic architecture, database schema, or framework prescription.
+
+## 0. Traceability
+
+`BUSINESS OUTCOME → WORKFLOW → ARCHETYPE → PRODUCT PRIMITIVES → CAPABILITY / PATTERN → DECISION → VERIFICATION`
+
+Use the chain where it materially clarifies a decision. Do not invent missing links; record gaps or uncertainty instead.
 
 ## 1. Product outcome
 
 - Product / working title:
-- Primary outcome:
-- Users / participants:
-- Success criteria:
-- Constraints:
+- Primary business/user outcome:
+- Primary users / participants:
+- Success criteria (observable or measurable):
+- Existing behavior to preserve:
+- Constraints / project-local instructions:
 
-## 2. Participants & relationships
+## 2. Business operating context
 
-| Party | Context | Role | Relationship | Permissions boundary |
+> Complete when the request describes a real-world operation. Archetypes are behavioral hypotheses, not templates or automatic feature lists.
+
+| Archetype | Confidence | Behavioral signals observed | Relevant workflow(s) | Why it matters |
 |---|---|---|---|---|
-| | | | | |
+| | HIGH / MEDIUM / LOW | | | |
 
-## 3. Jobs & critical workflows
+- Combined archetypes needed:
+- Deliberately excluded archetypes / why:
+
+## 3. Participants & relationships
+
+| Party | Context | Role | Relationship | Permission / boundary | Relevant job |
+|---|---|---|---|---|---|
+| | | | | | |
+
+Rules:
+- Identity is not a role.
+- Role is not a relationship.
+- Authorization boundaries remain explicit.
+
+## 4. Jobs & critical workflows
 
 ### Primary jobs
 
 - 
 
-### Critical workflow
+### Critical workflow(s)
 
-`TRIGGER → STEP → STEP → OUTCOME`
+`TRIGGER → STEP → DECISION / HANDOFF → STEP → OUTCOME`
 
-### Important states
+| Workflow | Trigger | Primary participant | Key steps / handoffs | Outcome | Critical states / exceptions |
+|---|---|---|---|---|---|
+| | | | | | |
+
+### Important interaction states
 
 - Loading:
 - Empty / first use:
 - Success:
 - Error:
 - Permission denied:
+- Offline / degraded (if relevant):
 - Edge / recovery:
 
-## 4. Domain model
+## 5. Product model
 
-### Core entities / resources
+> Use only the primitives that materially clarify the product. This is conceptual modeling, not a schema prescription.
 
-- 
-
-### Ownership / tenancy
+### Parties / relationships
 
 - 
 
-### Lifecycle / temporal rules
+### Core resources / entities
 
 - 
 
-## 5. Capability resolution
+### Actions / events
 
-| Need / behavior | Candidate | Classification | Maturity | Evidence | Coverage | Gap decision | Next action |
-|---|---|---|---|---|---|---|---|
-| | | | | | | | |
+- 
+
+### States / lifecycle
+
+- 
+
+### Time / temporal rules
+
+- 
+
+### Transactions / communications / documents
+
+- 
+
+### Boundaries / tenancy / authorization
+
+- 
+
+## 6. Capability resolution
+
+| Workflow / need | Candidate capability | Classification | Maturity | Evidence status | Coverage | Archetype context | Gap decision | Decision / rationale | Next action |
+|---|---|---|---|---|---|---|---|---|---|
+| | | | | | | | | | |
 
 Classification must be one of: `DIRECT`, `SUPPORTING`, `OPTIONAL`, `MISSING`, `PRODUCT-SPECIFIC`.
 
-Gap decisions for `MISSING`: `YON-CANDIDATE`, `PRODUCT-SPECIFIC`, or `NEEDS-EVIDENCE`.
+For `MISSING`, gap decision must be one of: `YON-CANDIDATE`, `PRODUCT-SPECIFIC`, or `NEEDS-EVIDENCE`.
 
-## 6. Patterns
+Maturity values: `DISCOVERED`, `EXPERIMENTAL`, `PROVEN`, `DEPRECATED`.
 
-| Product problem | Pattern | Why it fits | Evidence / validation |
+Evidence values: `UNVERIFIED`, `SUPPORTED`, `STRONG`, `CONTRADICTED`.
+
+## 7. Pattern selection
+
+| Workflow / product problem | Pattern | Why it fits | Evidence / validation | Decision |
+|---|---|---|---|---|
+| | | | | |
+
+Do not add a pattern when the interaction does not need it.
+
+## 8. Minimal composition & boundaries
+
+### Required reusable capabilities
+
+- 
+
+### Supporting capabilities
+
+- 
+
+### Optional / explicitly deferred
+
+- 
+
+### Product-specific behavior
+
+- 
+
+### Ownership boundaries
+
+| Behavior / responsibility | Owner | Depends on | Must not duplicate |
 |---|---|---|---|
 | | | | |
 
-## 7. Composition
+### Composition decisions
 
-### Minimal reusable composition
-
-- 
-
-### Boundaries
-
-- Which capability owns each behavior?
 - Where do capabilities interact?
-- What must not be duplicated?
+- What is deliberately not composed?
+- Which behavior remains local to the product?
+- What would be over-modeling or premature abstraction?
 
-## 8. Product-specific behavior
+## 9. Product-specific behavior
+
+List domain rules and decisions that belong to this product unless deliberate evidence supports reuse.
 
 - 
 
-## 9. Gaps & assumptions
+## 10. Gaps, assumptions & questions
 
 ### Genuine gaps
 
@@ -95,28 +168,50 @@ Gap decisions for `MISSING`: `YON-CANDIDATE`, `PRODUCT-SPECIFIC`, or `NEEDS-EVID
 
 - 
 
-## 10. Risk & verification
+### Evidence needed before proceeding
 
-| Gate | Scope | Expected evidence | Result |
-|---|---|---|---|
-| Structure | | | |
-| Product Journey | | | |
-| UX | | | |
-| UI | | | |
-| Accessibility | | | |
-| Runtime | | | |
-| Security | | | |
-| Regression | | | |
+- 
 
-Results: `PASS`, `FAIL`, `BLOCKED`, `NOT_APPLICABLE`. `BLOCKED` is never `PASS`.
+## 11. Risk & verification
 
-## 11. Implementation order
+| Gate | Scope | Risk / reason | Expected evidence | Result | Follow-up |
+|---|---|---|---|---|---|
+| Structure | YON / implementation integrity | | | | |
+| Product Journey | Primary user outcome | | | | |
+| UX | Critical interaction path | | | | |
+| UI | Visual / responsive implementation | | | | |
+| Accessibility | Inclusive use | | | | |
+| Runtime | Running product / network / console | | | | |
+| Security | Auth / authorization / tenant isolation / secrets | | | | |
+| Regression | Existing affected behavior | | | | |
+
+Results: `PASS`, `FAIL`, `BLOCKED`, `NOT_APPLICABLE`.
+
+**`BLOCKED` is never `PASS`.** If evidence cannot be obtained, record the blocker and its impact.
+
+## 12. Implementation order
+
+Order by user value, workflow dependency, risk, and ability to verify—not by feature count.
 
 1. 
 2. 
 3. 
 
-## 12. Privacy check
+### Dependencies / sequencing constraints
+
+- 
+
+### Explicitly deferred
+
+- 
+
+## 13. Decision log
+
+| Decision | Reason | Evidence / source | Impact | Revisit when |
+|---|---|---|---|---|
+| | | | | |
+
+## 14. Privacy check
 
 - [ ] No private source code
 - [ ] No secrets or credentials
@@ -124,15 +219,17 @@ Results: `PASS`, `FAIL`, `BLOCKED`, `NOT_APPLICABLE`. `BLOCKED` is never `PASS`.
 - [ ] No proprietary prompts
 - [ ] No confidential architecture
 - [ ] No identifying business rules
+- [ ] Reusable knowledge is generalized and public-safe
 
-## 13. Evidence after implementation
+## 15. Evidence after implementation
 
 - Observation:
 - Intervention:
 - Outcome:
 - Limitations:
+- Runtime / verification evidence:
 - Candidate for extraction:
 
 ## Completion rule
 
-The Blueprint is ready when the primary outcome and workflow are understood, participants and relationships are explicit, reusable capabilities and patterns are classified, gaps are honest, product-specific behavior is separated, risk is visible, and implementation/verification steps are clear.
+The Blueprint is ready when the primary outcome and critical workflow are sufficiently understood to guide implementation without guessing; participants and relationships are explicit; applicable archetype context is justified; product primitives are no more detailed than necessary; capabilities and patterns are classified and traceable; composition boundaries and product-specific behavior are separated; gaps and uncertainty are honest; high-risk areas have proportional verification gates; and implementation order is clear.
