@@ -49,8 +49,10 @@ Para ver la guía completa: `INSTALL-CLAUDE-CODE.md`.
 - `yon-visual` — inteligencia visual
 - `yon-motion` — motion y microinteracciones
 - `yon-qa` — verificación del producto real
+- `yon-validate` — validación estructural y de producto
 - `yon-capability-resolver` — composición de capacidades reutilizables
 - `yon-extract` — extracción deliberada de conocimiento generalizable desde evidencia
+- `yon-learn` — promoción deliberada de conocimiento revisado hacia patterns/capabilities
 
 Las skills especializadas de `product-design`, `ux`, `ui`, `saas`, `onboarding` y `qa` aportan conocimiento reutilizable adicional.
 
@@ -89,13 +91,23 @@ Una solución de un proyecto privado puede inspirar una capability pública, per
 
 Los patrones resuelven problemas recurrentes de producto e interfaz y documentan contexto, solución, variantes, trade-offs, accesibilidad, responsive y verificación.
 
-## Evidencia y evolución
+## Evidencia, aprendizaje y evolución
 
 La evidencia conecta el trabajo real con el conocimiento reutilizable. Puede registrar observaciones, feedback, experimentos, verificaciones de runtime, regresiones y resultados de producción.
 
 La evidencia no convierte automáticamente una solución en `PROVEN`. YON distingue hechos observados de inferencias y exige revisión antes de promover conocimiento.
 
-Cuando una solución parece reutilizable, `yon-extract` puede generar un candidato de pattern o capability. La extracción y la publicación son pasos deliberadamente separados.
+Cuando una solución parece reutilizable, `yon-extract` puede generar un candidato de pattern o capability. `yon-learn` puede promover un candidato revisado; extracción y publicación son pasos deliberadamente separados.
+
+Estados de conocimiento: `DISCOVERED → EXPERIMENTAL → PROVEN → DEPRECATED`.
+
+## Validación continua
+
+YON incluye un validador estructural portable en `scripts/validate_yon.py`. Comprueba integridad básica del plugin, skills, commands, agents e índices/referencias locales.
+
+GitHub Actions ejecuta ese validador en cada push y pull request mediante `.github/workflows/validate.yml`.
+
+La validación de producto usa gates proporcionales al riesgo: Structure, Product Journey, UX, UI, Accessibility, Runtime, Security y Regression.
 
 ## Privacidad
 
@@ -121,8 +133,10 @@ skills/
 ├── yon-visual/
 ├── yon-motion/
 ├── yon-qa/
+├── yon-validate/
 ├── yon-capability-resolver/
 ├── yon-extract/
+├── yon-learn/
 ├── product-design/
 ├── ux/
 ├── ui/
@@ -142,6 +156,11 @@ evidence/
 validation/
 commands/
 adapters/
+scripts/
+└── validate_yon.py
+.github/
+└── workflows/
+    └── validate.yml
 ```
 
 ## Estado
