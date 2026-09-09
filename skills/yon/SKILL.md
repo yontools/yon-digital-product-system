@@ -1,6 +1,6 @@
 ---
 name: yon
-description: YON Digital Product System master skill. Use when designing, building, auditing, polishing, or verifying a website, landing page, SaaS, dashboard, or digital product. Apply YON's product-engineering loop, inspect the real project before changing it, reuse relevant YON patterns/capabilities, and verify the running result.
+description: YON Digital Product System master skill. Use when designing, building, auditing, polishing, or verifying a website, landing page, SaaS, dashboard, or digital product. Apply YON's product-engineering loop, inspect the real project before changing it, resolve reusable capabilities and patterns before implementation, and verify the running result.
 ---
 
 # YON — Master Skill
@@ -39,11 +39,20 @@ Look for:
 - repetitive operator work
 - automation opportunities
 - AI opportunities
-- reusable capabilities
+- reusable capabilities and patterns
 
 ### PROPOSE
 
 Prioritize by user impact, confidence, and effort. Do not change something merely because a framework, trend, or design pattern suggests it.
+
+Before implementation, resolve reusable knowledge:
+
+1. Check `capabilities/INDEX.md` and `capabilities/CAPABILITY-MAP.md`.
+2. Use the capability resolver when the product need spans multiple reusable behaviors.
+3. Check `patterns/INDEX.md` for recurring UX/UI solutions.
+4. Classify candidates as `DIRECT`, `SUPPORTING`, `OPTIONAL`, `MISSING`, or `PRODUCT-SPECIFIC`.
+5. Prefer proven knowledge; validate experimental knowledge before treating it as established.
+6. If no reusable solution fits, record the gap instead of forcing a match.
 
 ### IMPLEMENT
 
@@ -52,6 +61,8 @@ Make the smallest coherent change that solves the problem. Reuse existing archit
 ### RUN / INSPECT / CORRECT / VERIFY
 
 Run the actual product whenever the environment permits. Exercise affected flows, inspect browser behavior and console/runtime output, check responsive states, correct regressions, and verify the original user outcome.
+
+Use `validation/INDEX.md` to choose the appropriate evidence gates. A check is `PASS`, `FAIL`, `BLOCKED`, or `NOT_APPLICABLE`; never treat `BLOCKED` as `PASS`.
 
 ## Reuse engine
 
@@ -79,7 +90,7 @@ Treat authentication, authorization, billing, destructive operations, database m
 
 ## Definition of done
 
-Do not declare a task complete merely because code compiles. Confirm the affected user journey works in the running product and that important states, responsive behavior, accessibility, visual coherence, and runtime errors have been considered.
+Do not declare a task complete merely because code compiles. Confirm the affected user journey works in the running product and that important states, responsive behavior, accessibility, visual coherence, runtime errors, and relevant security boundaries have been considered.
 
 ## Supporting YON references
 
@@ -91,5 +102,6 @@ Do not declare a task complete merely because code compiles. Confirm the affecte
 - Onboarding: `skills/onboarding/SKILL.md`
 - QA: `skills/qa/SKILL.md`
 - Commands/workflows: `commands/`
-- Reusable capabilities: `capabilities/`
-- Reusable patterns: `patterns/`
+- Reusable capabilities: `capabilities/INDEX.md`
+- Reusable patterns: `patterns/INDEX.md`
+- Validation gates: `validation/INDEX.md`
