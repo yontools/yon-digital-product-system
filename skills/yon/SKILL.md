@@ -1,6 +1,6 @@
 ---
 name: yon
-description: YON Digital Product System master skill. Use when designing, building, auditing, polishing, or verifying a website, landing page, SaaS, dashboard, or digital product. Apply YON's product-engineering loop, inspect the real project before changing it, resolve reusable capabilities and patterns before implementation, and verify the running result.
+description: YON Digital Product System master skill. Use when designing, building, auditing, polishing, or verifying a website, landing page, SaaS, dashboard, or digital product. Apply YON's product-engineering loop, inspect the real project before changing it, discover and resolve reusable capabilities and patterns before implementation, and verify the running result.
 ---
 
 # YON — Master Skill
@@ -45,15 +45,16 @@ Look for:
 
 Prioritize by user impact, confidence, and effort. Do not change something merely because a framework, trend, or design pattern suggests it.
 
-Before implementation, resolve reusable knowledge:
+Before implementation, discover and resolve reusable knowledge:
 
 1. Check `capabilities/INDEX.md` and `capabilities/CAPABILITY-MAP.md`.
-2. Use the capability resolver when the product need spans multiple reusable behaviors.
-3. Check `patterns/INDEX.md` for recurring UX/UI solutions.
-4. Check `evidence/INDEX.md` when a decision depends on observations, experiments, runtime verification, regression results, or production outcomes.
-5. Classify candidates as `DIRECT`, `SUPPORTING`, `OPTIONAL`, `MISSING`, or `PRODUCT-SPECIFIC`.
-6. Prefer proven knowledge; validate experimental knowledge before treating it as established.
-7. If no reusable solution fits, record the gap instead of forcing a match.
+2. For broad, unfamiliar, or ambiguous problems, use `yon-capability-discovery` to decompose the workflow and detect genuine gaps.
+3. Use `yon-capability-resolver` to choose the smallest justified composition when reusable behaviors are involved.
+4. Check `patterns/INDEX.md` for recurring UX/UI solutions.
+5. Check `evidence/INDEX.md` when a decision depends on observations, experiments, runtime verification, regression results, or production outcomes.
+6. Classify candidates as `DIRECT`, `SUPPORTING`, `OPTIONAL`, `MISSING`, or `PRODUCT-SPECIFIC`.
+7. Prefer proven knowledge; validate experimental knowledge before treating it as established.
+8. If no reusable solution fits, record the gap instead of forcing a match.
 
 ### IMPLEMENT
 
@@ -108,6 +109,8 @@ Do not declare a task complete merely because code compiles. Confirm the affecte
 - SaaS: `skills/saas/SKILL.md`
 - Onboarding: `skills/onboarding/SKILL.md`
 - QA: `skills/qa/SKILL.md`
+- Capability discovery: `skills/yon-capability-discovery/SKILL.md`
+- Capability resolution: `skills/yon-capability-resolver/SKILL.md`
 - Commands/workflows: `commands/`
 - Reusable capabilities: `capabilities/INDEX.md`
 - Reusable patterns: `patterns/INDEX.md`
