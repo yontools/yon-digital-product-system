@@ -50,9 +50,10 @@ Before implementation, resolve reusable knowledge:
 1. Check `capabilities/INDEX.md` and `capabilities/CAPABILITY-MAP.md`.
 2. Use the capability resolver when the product need spans multiple reusable behaviors.
 3. Check `patterns/INDEX.md` for recurring UX/UI solutions.
-4. Classify candidates as `DIRECT`, `SUPPORTING`, `OPTIONAL`, `MISSING`, or `PRODUCT-SPECIFIC`.
-5. Prefer proven knowledge; validate experimental knowledge before treating it as established.
-6. If no reusable solution fits, record the gap instead of forcing a match.
+4. Check `evidence/INDEX.md` when a decision depends on observations, experiments, runtime verification, regression results, or production outcomes.
+5. Classify candidates as `DIRECT`, `SUPPORTING`, `OPTIONAL`, `MISSING`, or `PRODUCT-SPECIFIC`.
+6. Prefer proven knowledge; validate experimental knowledge before treating it as established.
+7. If no reusable solution fits, record the gap instead of forcing a match.
 
 ### IMPLEMENT
 
@@ -64,6 +65,8 @@ Run the actual product whenever the environment permits. Exercise affected flows
 
 Use `validation/INDEX.md` to choose the appropriate evidence gates. A check is `PASS`, `FAIL`, `BLOCKED`, or `NOT_APPLICABLE`; never treat `BLOCKED` as `PASS`.
 
+Record meaningful findings as evidence when they can support a future reusable decision.
+
 ## Reuse engine
 
 Before inventing a solution, check the YON capability and pattern libraries.
@@ -71,6 +74,10 @@ Before inventing a solution, check the YON capability and pattern libraries.
 A capability is a reusable product behavior such as asset management, rental management, geolocation, expiration handling, notifications, roles, workflows, documents, payments, or audit history.
 
 A pattern is a reusable solution to a recurring product/interface problem.
+
+Evidence is the support layer for these reusable decisions. It distinguishes what was observed or verified from what is inferred. Evidence does not automatically make a solution universal or `PROVEN`.
+
+When a validated project solution appears broadly reusable, use `/yon-extract` to create a deliberate, privacy-checked extraction candidate. Extraction is separate from publication or promotion.
 
 Prefer `proven` solutions. Treat `experimental` solutions as candidates that require validation.
 
@@ -104,4 +111,6 @@ Do not declare a task complete merely because code compiles. Confirm the affecte
 - Commands/workflows: `commands/`
 - Reusable capabilities: `capabilities/INDEX.md`
 - Reusable patterns: `patterns/INDEX.md`
+- Evidence: `evidence/INDEX.md`
+- Extraction: `skills/yon-extract/SKILL.md`
 - Validation gates: `validation/INDEX.md`
