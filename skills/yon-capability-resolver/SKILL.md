@@ -23,6 +23,16 @@ The resolver answers:
 7. What must remain product-specific?
 8. In what order should the capabilities be implemented and verified?
 
+## Relationship with Business Discovery
+
+When the product comes from a real-world business operation, `yon-business-discovery` may first identify Business Operating Archetypes. Those archetypes provide **behavioral context**, not automatic capability requirements.
+
+Use:
+
+`BUSINESS OPERATION → ARCHETYPES → WORKFLOWS → CAPABILITY DISCOVERY → RESOLUTION`
+
+A resolver must still verify the actual workflow before turning an archetype into a capability recommendation. For example, `Appointment & Scheduling` does not automatically require a generic calendar, and `Commerce & Fulfillment` does not automatically require inventory.
+
 ## Relationship with Discovery
 
 `yon-capability-discovery` searches broadly for reusable knowledge and identifies genuine gaps.
@@ -41,13 +51,25 @@ If discovery has not been performed and the problem spans several reusable behav
 
 Inspect the request, users, roles, jobs, workflows, constraints, existing behavior, relevant code, and project instructions. Do not assume a capability merely because the product belongs to a familiar category.
 
-### 2. Decompose required behavior
+### 2. Use business context when available
+
+If a Business Discovery result exists, inspect its detected archetypes, confidence, evidence, workflows, resources, and unresolved questions.
+
+Treat:
+
+- HIGH confidence as strong contextual evidence;
+- MEDIUM confidence as useful but confirmable context;
+- LOW confidence as a hypothesis that must not silently become a requirement.
+
+If no Business Discovery exists, do not invent archetypes simply to fill the process.
+
+### 3. Decompose required behavior
 
 Identify the minimum behaviors needed for the requested outcome: entities and relationships, lifecycle/state changes, time rules, ownership, permissions, communications, transactions/documents when relevant, operational handoffs, and critical states.
 
 Use `capabilities/COMPOSITION-GUIDE.md` as a domain-neutral checklist for these dimensions. It is a reasoning aid, not a mandatory architecture.
 
-### 3. Search YON knowledge
+### 4. Search YON knowledge
 
 Inspect:
 
@@ -61,7 +83,7 @@ Inspect:
 
 Search by behavior and workflow, not only product category.
 
-### 4. Classify matches
+### 5. Classify matches
 
 For every relevant candidate, assign exactly one classification:
 
@@ -73,7 +95,7 @@ For every relevant candidate, assign exactly one classification:
 
 Never use a DIRECT match merely because names sound similar.
 
-### 5. Evaluate evidence and maturity
+### 6. Evaluate evidence and maturity
 
 For each reusable recommendation, state the available evidence and lifecycle maturity. Prefer `PROVEN` when documented scope matches. Treat `EXPERIMENTAL` as a hypothesis requiring validation when material. Do not promote maturity during resolution.
 
@@ -84,7 +106,7 @@ Evidence status and capability lifecycle are separate dimensions:
 
 Do not confuse either system with the classification above.
 
-### 6. Validate composition
+### 7. Validate composition
 
 Before recommending a composition, check interactions between:
 
@@ -100,7 +122,7 @@ Before recommending a composition, check interactions between:
 
 The capability map is a discovery aid, never an automatic architecture decision.
 
-### 7. Resolve gaps honestly
+### 8. Resolve gaps honestly
 
 A `MISSING` capability is valid output. Do not invent a match.
 
@@ -112,16 +134,17 @@ For each genuine gap, decide whether it is:
 
 A gap does not become a public capability automatically. Use `yon-extract` for deliberate extraction and `yon-learn` for reviewed promotion.
 
-### 8. Produce the resolution matrix
+### 9. Produce the resolution matrix
 
 Return:
 
-| Need / behavior | Candidate | Classification | Maturity | Evidence | Coverage | Gap decision | Next action |
-|---|---|---|---|---|---|---|---|
+| Need / behavior | Archetype context | Candidate | Classification | Maturity | Evidence | Coverage | Gap decision | Next action |
+|---|---|---|---|---|---|---|---|---|
 
 Then provide:
 
 - problem/workflow summary;
+- relevant archetypes and confidence;
 - direct capabilities;
 - supporting capabilities;
 - optional capabilities;
@@ -138,11 +161,12 @@ Then provide:
 
 1. Prefer the smallest composition that fully covers the required outcome.
 2. Add a capability only when its behavior is justified by the workflow.
-3. Do not duplicate semantics across capabilities.
-4. Keep domain-specific business rules in the product unless evidence supports broader reuse.
-5. If two capabilities overlap, explain the boundary and choose one owner for the behavior.
-6. If a dependency is uncertain, mark it unresolved instead of silently adding it.
-7. Optional capabilities must not become hidden requirements.
+3. Treat archetype matches as context, never proof.
+4. Do not duplicate semantics across capabilities.
+5. Keep domain-specific business rules in the product unless evidence supports broader reuse.
+6. If two capabilities overlap, explain the boundary and choose one owner for the behavior.
+7. If a dependency is uncertain, mark it unresolved instead of silently adding it.
+8. Optional capabilities must not become hidden requirements.
 
 ## Rules
 
@@ -167,4 +191,4 @@ The resolver must still inspect the actual workflow, ownership, permissions, tim
 
 ## Completion rule
 
-A resolution is complete when the real workflow is understood, candidates are classified, evidence and maturity are visible, composition boundaries are explicit, gaps are honest, product-specific requirements are separated, and the next implementation and verification steps are clear.
+A resolution is complete when the real workflow is understood, relevant business archetypes are treated as contextual evidence rather than requirements, candidates are classified, evidence and maturity are visible, composition boundaries are explicit, gaps are honest, product-specific requirements are separated, and the next implementation and verification steps are clear.
