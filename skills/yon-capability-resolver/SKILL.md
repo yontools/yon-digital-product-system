@@ -1,88 +1,167 @@
 ---
 name: yon-capability-resolver
-description: Map product requirements to reusable YON capabilities and patterns without importing private implementation details.
+description: Resolve product requirements into the smallest evidence-aware composition of reusable YON capabilities and patterns without importing private implementation details.
 disable-model-invocation: true
 ---
 
 # YON Capability Resolver
 
-Use this skill when planning or extending a digital product and deciding which reusable YON capabilities should be considered.
+Use this skill after or together with `yon-capability-discovery` when planning or extending a digital product and deciding which reusable YON capabilities should be used in implementation.
 
 ## Objective
 
-Translate a product need into a small, explicit capability composition before implementation.
+Translate a real product need into the smallest justified capability composition before implementation.
 
-The resolver must answer:
+The resolver answers:
 
-1. What user/business problem is being solved?
-2. Which YON capabilities are directly relevant?
-3. Which capabilities are optional or only hypotheses?
-4. What important capability is missing?
-5. What evidence supports each recommendation?
-6. What must remain product-specific rather than becoming a shared capability?
+1. What user/business problem must be solved?
+2. Which reusable capabilities directly cover required behavior?
+3. Which supporting capabilities are needed for composition?
+4. Which candidates are optional hypotheses?
+5. What required behavior is genuinely missing?
+6. What evidence supports each recommendation?
+7. What must remain product-specific?
+8. In what order should the capabilities be implemented and verified?
+
+## Relationship with Discovery
+
+`yon-capability-discovery` searches broadly for reusable knowledge and identifies genuine gaps.
+
+This resolver turns that discovery into an implementation-oriented composition.
+
+Use the sequence:
+
+`PROBLEM → DISCOVERY → RESOLUTION → COMPOSITION → IMPLEMENTATION → VERIFICATION`
+
+If discovery has not been performed and the problem spans several reusable behaviors, perform discovery first rather than guessing.
 
 ## Resolution process
 
 ### 1. Understand the product
 
-Inspect the request, target users, workflows, constraints, existing code, and current architecture. Do not assume a capability merely because a product belongs to a familiar category.
+Inspect the request, users, roles, jobs, workflows, constraints, existing behavior, relevant code, and project instructions. Do not assume a capability merely because the product belongs to a familiar category.
 
-### 2. Search YON knowledge
+### 2. Decompose required behavior
+
+Identify the minimum behaviors needed for the requested outcome: entities and relationships, lifecycle/state changes, time rules, ownership, permissions, communications, transactions/documents when relevant, operational handoffs, and critical states.
+
+### 3. Search YON knowledge
 
 Inspect:
 
-- `capabilities/README.md`
+- `capabilities/INDEX.md`
 - `capabilities/CAPABILITY-MAP.md`
-- individual files in `capabilities/`
-- relevant files in `patterns/`
-- project-local documentation and code when available
+- individual capability files
+- `patterns/INDEX.md`
+- relevant pattern files
+- `evidence/INDEX.md` and relevant evidence when available
 
-### 3. Classify matches
+Search by behavior and workflow, not only product category.
 
-For every candidate capability, classify it as:
+### 4. Classify matches
 
-- **DIRECT** — clearly required by the described workflow.
-- **SUPPORTING** — useful to enable another capability.
-- **OPTIONAL** — plausible but not yet justified.
-- **MISSING** — required behavior with no reusable YON capability yet.
-- **PRODUCT-SPECIFIC** — should stay in the product and should not be generalized automatically.
+For every relevant candidate, assign exactly one classification:
 
-### 4. Check composition
+- **DIRECT** — clearly required and substantially covered by an existing reusable capability.
+- **SUPPORTING** — enables a direct capability or important workflow.
+- **OPTIONAL** — plausible but not currently justified.
+- **MISSING** — required reusable behavior with no adequate YON capability.
+- **PRODUCT-SPECIFIC** — important to this product but should remain local.
 
-Capabilities can compose, but YON must not force a predefined architecture. Validate dependencies, ownership of data, lifecycle interactions, permissions, notifications, and failure states.
+Never use a DIRECT match merely because names sound similar.
 
-### 5. Produce a resolution
+### 5. Evaluate evidence and maturity
 
-Return a concise matrix:
+For each reusable recommendation, state the available evidence and lifecycle maturity. Prefer `PROVEN` when documented scope matches. Treat `EXPERIMENTAL` as a hypothesis requiring validation when material. Do not promote maturity during resolution.
 
-| Capability | Classification | Why | Evidence | Next action |
-|---|---|---|---|---|
+Evidence status and capability lifecycle are separate dimensions:
+
+- evidence: `UNVERIFIED`, `SUPPORTED`, `STRONG`, `CONTRADICTED`;
+- lifecycle: `DISCOVERED`, `EXPERIMENTAL`, `PROVEN`, `DEPRECATED`.
+
+Do not confuse either system with the classification above.
+
+### 6. Validate composition
+
+Before recommending a composition, check interactions between:
+
+- entity relationships and data ownership;
+- tenancy and isolation;
+- lifecycle/state transitions;
+- permissions and authorization;
+- notifications and timing;
+- auditability;
+- failure and recovery;
+- operator workflows;
+- responsive/accessibility requirements.
+
+The capability map is a discovery aid, never an automatic architecture decision.
+
+### 7. Resolve gaps honestly
+
+A `MISSING` capability is valid output. Do not invent a match.
+
+For each genuine gap, decide whether it is:
+
+- `YON-CANDIDATE` — likely reusable across multiple products;
+- `PRODUCT-SPECIFIC` — should remain local;
+- `NEEDS-EVIDENCE` — potentially reusable but insufficiently supported.
+
+A gap does not become a public capability automatically. Use `yon-extract` for deliberate extraction and `yon-learn` for reviewed promotion.
+
+### 8. Produce the resolution matrix
+
+Return:
+
+| Need / behavior | Candidate | Classification | Maturity | Evidence | Coverage | Gap decision | Next action |
+|---|---|---|---|---|---|---|---|
 
 Then provide:
 
-- recommended composition
-- unresolved questions
-- missing capabilities
-- implementation order
-- verification plan
-- privacy boundary
+- problem/workflow summary;
+- direct capabilities;
+- supporting capabilities;
+- optional capabilities;
+- missing capabilities;
+- product-specific requirements;
+- recommended minimal composition;
+- dependencies/interactions;
+- implementation order;
+- verification plan;
+- unresolved questions;
+- privacy boundary.
+
+## Composition rules
+
+1. Prefer the smallest composition that fully covers the required outcome.
+2. Add a capability only when its behavior is justified by the workflow.
+3. Do not duplicate semantics across capabilities.
+4. Keep domain-specific business rules in the product unless evidence supports broader reuse.
+5. If two capabilities overlap, explain the boundary and choose one owner for the behavior.
+6. If a dependency is uncertain, mark it unresolved instead of silently adding it.
+7. Optional capabilities must not become hidden requirements.
 
 ## Rules
 
 - Reuse before reinventing.
-- Do not copy private project code or proprietary details into YON.
-- Do not treat capability-map combinations as automatic architecture decisions.
-- Prefer the smallest capability set that solves the real problem.
-- A missing capability is a useful result; do not invent a fake match.
-- If evidence is weak, mark the capability as experimental or optional.
-- Keep business rules that are unique to one company/product inside that product.
+- Search before creating.
+- Do not force a capability match.
+- Do not copy private code, secrets, customer data, proprietary prompts, confidential architecture, or identifying business rules into YON.
+- Do not treat capability-map combinations as automatic architecture.
+- Do not upgrade lifecycle maturity during resolution.
+- Do not publish or promote reusable knowledge from this skill.
+- Preserve existing working behavior unless the requested outcome requires change.
 
 ## Example
 
-A rental product may resolve to:
+A rental workflow might resolve to:
 
 `Asset Management + Rental Management + Temporal States & Expiration`
 
-and optionally add `Notifications` when deadline communication is a real requirement.
+with `Notification Orchestration` as supporting when deadline communication is required.
 
-The resolver should still inspect the actual workflow before recommending implementation.
+The resolver must still inspect the actual workflow, ownership, permissions, timing rules, and failure states before treating that composition as justified.
+
+## Completion rule
+
+A resolution is complete when the real workflow is understood, candidates are classified, evidence and maturity are visible, composition boundaries are explicit, gaps are honest, product-specific requirements are separated, and the next implementation and verification steps are clear.
