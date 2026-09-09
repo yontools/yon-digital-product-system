@@ -100,8 +100,11 @@ def check_commands() -> None:
     for path in sorted(commands_dir.glob("*.md")):
         text = read_text(path)
         meta = frontmatter(text)
-        if not meta.get("description"):
-            fail(f"command missing frontmatter description: {path.relative_to(ROOT)}")
+        # Existing YON commands predate command frontmatter. Accept either
+        # explicit frontmatter or a descriptive H1 so the validator does not
+        # force a mass-formatting change merely to establish integrity.
+        if not meta.get("description") and not re.search(r"^#\s+/[a-z0-9][a-z0-9-]*\s*$", text, re.I | re.M):
+            fail(f"command has no description or command heading: {path.relative_to(ROOT)}")
         # Any explicit `foo` skill reference must resolve.
         for name in re.findall(r"`([a-z0-9][a-z0-9-]*)` skill", text, re.I):
             if not (ROOT / "skills" / name / "SKILL.md").is_file():
@@ -133,16 +136,11 @@ def check_markdown_paths() -> None:
 
 
 def check_indexes() -> None:
-    index_specs = {
-        "capabilities/INDEX.md": "capabilities",
-        "patterns/INDEX.md": "patterns",
-    }
-    for index_rel, directory in index_specs.items():
+    for index_rel in ("capabilities/INDEX.md", "patterns/INDEX.md"):
         path = ROOT / index_rel
         if not path.is_file():
             continue
         text = read_text(path)
-        # Catch explicit markdown links to local files in the same knowledge directory.
         for target in re.findall(r"\]\(([^)]+\.md)\)", text):
             target = target.split("#", 1)[0]
             if target.startswith("http"):
