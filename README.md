@@ -50,11 +50,26 @@ Para ver la guía completa: `INSTALL-CLAUDE-CODE.md`.
 - `yon-motion` — motion y microinteracciones
 - `yon-qa` — verificación del producto real
 - `yon-validate` — validación estructural y de producto
-- `yon-capability-resolver` — composición de capacidades reutilizables
+- `yon-capability-discovery` — descubrimiento de capacidades, patrones y gaps antes de resolver la composición
+- `yon-capability-resolver` — composición de capacidades reutilizables después del descubrimiento
 - `yon-extract` — extracción deliberada de conocimiento generalizable desde evidencia
 - `yon-learn` — promoción deliberada de conocimiento revisado hacia patterns/capabilities
 
 Las skills especializadas de `product-design`, `ux`, `ui`, `saas`, `onboarding` y `qa` aportan conocimiento reutilizable adicional.
+
+## Descubrimiento y composición de capacidades
+
+YON separa **descubrir** de **resolver**.
+
+El descubrimiento sigue:
+
+`PROBLEMA → CAPACIDADES EXISTENTES → PATRONES EXISTENTES → GAPS → COMPOSICIÓN → IMPLEMENTACIÓN`
+
+`yon-capability-discovery` descompone el workflow real, busca conocimiento reutilizable, clasifica candidatos como `DIRECT`, `SUPPORTING`, `OPTIONAL`, `MISSING` o `PRODUCT-SPECIFIC`, y determina si un gap podría ser candidato a YON, debe permanecer específico del producto o necesita más evidencia.
+
+`yon-capability-resolver` usa ese análisis para elegir la composición mínima y justificar el orden de implementación y verificación.
+
+Ninguna de las dos skills publica automáticamente nuevas capabilities.
 
 ## Agentes
 
@@ -134,6 +149,7 @@ skills/
 ├── yon-motion/
 ├── yon-qa/
 ├── yon-validate/
+├── yon-capability-discovery/
 ├── yon-capability-resolver/
 ├── yon-extract/
 ├── yon-learn/
