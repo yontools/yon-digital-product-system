@@ -23,7 +23,9 @@ Inspect the repository, framework, routes, components, data flows, assets, depen
 
 ### UNDERSTAND
 
-Identify users, roles, primary jobs, critical workflows, business constraints, success criteria, and existing behavior that must be preserved.
+Identify users, participants, roles, relationships, primary jobs, critical workflows, business constraints, success criteria, and existing behavior that must be preserved.
+
+For broad products, use the Universal Product Model to establish a lightweight conceptual vocabulary before capability resolution. Consult `model/UNIVERSAL-PRODUCT-MODEL.md` and use `model/PRODUCT-MODEL-TEMPLATE.md` only when the model materially improves the work.
 
 ### DETECT
 
@@ -40,6 +42,7 @@ Look for:
 - automation opportunities
 - AI opportunities
 - reusable capabilities and patterns
+- meaningful participant relationships, resource lifecycles, temporal rules, and workflow boundaries
 
 ### PROPOSE
 
@@ -47,14 +50,15 @@ Prioritize by user impact, confidence, and effort. Do not change something merel
 
 Before implementation, discover and resolve reusable knowledge:
 
-1. Check `capabilities/INDEX.md` and `capabilities/CAPABILITY-MAP.md`.
-2. For broad, unfamiliar, or ambiguous problems, use `yon-capability-discovery` to decompose the workflow and detect genuine gaps.
-3. Use `yon-capability-resolver` to choose the smallest justified composition when reusable behaviors are involved.
-4. Check `patterns/INDEX.md` for recurring UX/UI solutions.
-5. Check `evidence/INDEX.md` when a decision depends on observations, experiments, runtime verification, regression results, or production outcomes.
-6. Classify candidates as `DIRECT`, `SUPPORTING`, `OPTIONAL`, `MISSING`, or `PRODUCT-SPECIFIC`.
-7. Prefer proven knowledge; validate experimental knowledge before treating it as established.
-8. If no reusable solution fits, record the gap instead of forcing a match.
+1. Establish the relevant product model when the product is broad enough; do not over-model.
+2. Check `capabilities/INDEX.md` and `capabilities/CAPABILITY-MAP.md`.
+3. For broad, unfamiliar, or ambiguous problems, use `yon-capability-discovery` to decompose the workflow and detect genuine gaps.
+4. Use `yon-capability-resolver` to choose the smallest justified composition when reusable behaviors are involved.
+5. Check `patterns/INDEX.md` for recurring UX/UI solutions.
+6. Check `evidence/INDEX.md` when a decision depends on observations, experiments, runtime verification, regression results, or production outcomes.
+7. Classify candidates as `DIRECT`, `SUPPORTING`, `OPTIONAL`, `MISSING`, or `PRODUCT-SPECIFIC`.
+8. Prefer proven knowledge; validate experimental knowledge before treating it as established.
+9. If no reusable solution fits, record the gap instead of forcing a match.
 
 ### IMPLEMENT
 
@@ -77,6 +81,8 @@ A capability is a reusable product behavior such as asset management, rental man
 A pattern is a reusable solution to a recurring product/interface problem.
 
 Evidence is the support layer for these reusable decisions. It distinguishes what was observed or verified from what is inferred. Evidence does not automatically make a solution universal or `PROVEN`.
+
+The Universal Product Model is a conceptual layer before capability composition. It describes common primitives such as Party, Relationship, Role, Resource, Action, Event, State, Time/Temporal Rule, Workflow, Transaction, Communication, Document, and Permission/Boundary. It does not prescribe a schema, framework, architecture, or implementation.
 
 When a validated project solution appears broadly reusable, use `/yon-extract` to create a deliberate, privacy-checked extraction candidate. Extraction is separate from publication or promotion.
 
@@ -103,6 +109,9 @@ Do not declare a task complete merely because code compiles. Confirm the affecte
 ## Supporting YON references
 
 - Core rules: `YON.md`
+- Universal Product Model: `model/UNIVERSAL-PRODUCT-MODEL.md`
+- Product Model template: `model/PRODUCT-MODEL-TEMPLATE.md`
+- Product model skill: `skills/yon-product-model/SKILL.md`
 - Product design: `skills/product-design/SKILL.md`
 - UX: `skills/ux/SKILL.md`
 - UI: `skills/ui/SKILL.md`
