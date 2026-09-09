@@ -50,26 +50,31 @@ Para ver la guía completa: `INSTALL-CLAUDE-CODE.md`.
 - `yon-motion` — motion y microinteracciones
 - `yon-qa` — verificación del producto real
 - `yon-validate` — validación estructural y de producto
-- `yon-capability-discovery` — descubrimiento de capacidades, patrones y gaps antes de resolver la composición
-- `yon-capability-resolver` — composición de capacidades reutilizables después del descubrimiento
+- `yon-capability-discovery` — descubrimiento de capacidades, patrones y gaps
+- `yon-capability-resolver` — composición mínima de capacidades reutilizables
+- `yon-blueprint` — creación y refinamiento del Product Blueprint
 - `yon-extract` — extracción deliberada de conocimiento generalizable desde evidencia
 - `yon-learn` — promoción deliberada de conocimiento revisado hacia patterns/capabilities
 
 Las skills especializadas de `product-design`, `ux`, `ui`, `saas`, `onboarding` y `qa` aportan conocimiento reutilizable adicional.
 
-## Descubrimiento y composición de capacidades
+## Descubrimiento, composición y Blueprint
 
-YON separa **descubrir** de **resolver**.
+YON separa **descubrir**, **resolver** y **definir el contrato de construcción**.
 
-El descubrimiento sigue:
+El flujo para productos amplios es:
 
-`PROBLEMA → CAPACIDADES EXISTENTES → PATRONES EXISTENTES → GAPS → COMPOSICIÓN → IMPLEMENTACIÓN`
+`PROBLEMA → DISCOVERY → RESOLUTION → BLUEPRINT → IMPLEMENTACIÓN → VERIFICACIÓN`
 
 `yon-capability-discovery` descompone el workflow real, busca conocimiento reutilizable, clasifica candidatos como `DIRECT`, `SUPPORTING`, `OPTIONAL`, `MISSING` o `PRODUCT-SPECIFIC`, y determina si un gap podría ser candidato a YON, debe permanecer específico del producto o necesita más evidencia.
 
-`yon-capability-resolver` usa ese análisis para elegir la composición mínima y justificar el orden de implementación y verificación.
+`yon-capability-resolver` transforma ese descubrimiento en la composición mínima justificada y define límites, dependencias y orden de implementación.
 
-Ninguna de las dos skills publica automáticamente nuevas capabilities.
+`yon-blueprint` convierte el entendimiento y la resolución en un **Product Blueprint**: participantes, relaciones, jobs, workflows, entidades, lifecycle, capacidades, patrones, gaps, comportamiento específico, riesgos y gates de verificación.
+
+El Blueprint es un contrato de decisión, no una arquitectura automática ni un esquema de base de datos. No autoriza a cambiar innecesariamente un producto que ya funciona.
+
+Los Blueprints reutilizan `blueprints/BLUEPRINT-TEMPLATE.md` y nunca deben contener secretos, datos privados, código propietario ni reglas de negocio identificables.
 
 ## Agentes
 
@@ -88,6 +93,7 @@ Las capabilities representan soluciones de producto generalizables que pueden co
 
 Ejemplos:
 
+- party & relationship management
 - asset management
 - rental management
 - geolocation/tracking
@@ -151,6 +157,7 @@ skills/
 ├── yon-validate/
 ├── yon-capability-discovery/
 ├── yon-capability-resolver/
+├── yon-blueprint/
 ├── yon-extract/
 ├── yon-learn/
 ├── product-design/
@@ -165,6 +172,10 @@ agents/
 ├── ux-reviewer.md
 ├── ui-reviewer.md
 └── qa-reviewer.md
+
+blueprints/
+├── README.md
+└── BLUEPRINT-TEMPLATE.md
 
 capabilities/
 patterns/
