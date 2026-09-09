@@ -51,6 +51,7 @@ Para ver la guía completa: `INSTALL-CLAUDE-CODE.md`.
 - `yon-qa` — verificación del producto real
 - `yon-validate` — validación estructural y de producto
 - `yon-product-model` — modelado conceptual universal del producto
+- `yon-business-discovery` — descubrimiento del modelo operativo del negocio mediante arquetipos de operación
 - `yon-capability-discovery` — descubrimiento de capacidades, patrones y gaps
 - `yon-capability-resolver` — composición mínima de capacidades reutilizables
 - `yon-blueprint` — creación y refinamiento del Product Blueprint
@@ -59,9 +60,25 @@ Para ver la guía completa: `INSTALL-CLAUDE-CODE.md`.
 
 Las skills especializadas de `product-design`, `ux`, `ui`, `saas`, `onboarding` y `qa` aportan conocimiento reutilizable adicional.
 
+## Business Discovery
+
+YON incorpora una capa de **Business Discovery** para entender cómo opera realmente un negocio antes de decidir qué software necesita.
+
+La idea central es evitar plantillas rígidas del tipo "software para barbería", "software para clínica" o "software para lavadero". Una categoría empresarial no determina por sí sola sus workflows.
+
+YON identifica **Business Operating Archetypes**: formas recurrentes de operar que pueden aparecer en múltiples industrias, como `Service Delivery`, `Appointment & Scheduling`, `Request → Order → Execution`, `Rental & Temporary Use`, `Asset & Field Operations`, `Commerce & Fulfillment`, `Case / Ticket / Work Management`, `Membership & Subscription`, `Marketplace & Matching`, `Approval & Authorization` o `Intake → Assessment → Decision → Follow-up`.
+
+Un negocio puede combinar varios arquetipos. Cada arquetipo es una **hipótesis de descubrimiento**, no una lista automática de funcionalidades, arquitectura, esquema de base de datos ni paquete SaaS.
+
+El flujo ampliado es:
+
+`BUSINESS REQUEST → OBSERVE OPERATION → IDENTIFY ARCHETYPES → MODEL WORKFLOWS → DISCOVER CAPABILITIES → RESOLVE → BLUEPRINT`
+
+Referencia: `discovery/BUSINESS-OPERATING-ARCHETYPES.md` y `discovery/BUSINESS-DISCOVERY-TEMPLATE.md`.
+
 ## Universal Product Model
 
-YON incorpora una capa conceptual anterior a las capabilities: el **Universal Product Model**.
+YON incorpora una capa conceptual posterior al entendimiento del negocio y anterior a las capabilities: el **Universal Product Model**.
 
 Su propósito es que YON pueda reconocer estructuras comunes entre productos de dominios muy diferentes sin imponer una arquitectura única. Usa primitivas como `Party`, `Relationship`, `Role`, `Resource`, `Action`, `Event`, `State`, `Time/Temporal Rule`, `Workflow`, `Transaction`, `Communication`, `Document` y `Permission/Boundary`.
 
@@ -79,7 +96,9 @@ YON separa **descubrir**, **resolver** y **definir el contrato de construcción*
 
 El flujo para productos amplios es:
 
-`PROBLEMA → DISCOVERY → RESOLUTION → BLUEPRINT → IMPLEMENTACIÓN → VERIFICACIÓN`
+`PROBLEMA → BUSINESS DISCOVERY → UNIVERSAL MODEL → DISCOVERY → RESOLUTION → BLUEPRINT → IMPLEMENTACIÓN → VERIFICACIÓN`
+
+`yon-business-discovery` entiende el modelo operativo del negocio y evita inferir requisitos desde la etiqueta del rubro.
 
 `yon-capability-discovery` descompone el workflow real, busca conocimiento reutilizable, clasifica candidatos como `DIRECT`, `SUPPORTING`, `OPTIONAL`, `MISSING` o `PRODUCT-SPECIFIC`, y determina si un gap podría ser candidato a YON, debe permanecer específico del producto o necesita más evidencia.
 
@@ -157,6 +176,11 @@ El conocimiento generalizable puede evolucionar en YON; el material privado perm
 .claude-plugin/
 └── plugin.json
 
+discovery/
+├── README.md
+├── BUSINESS-OPERATING-ARCHETYPES.md
+└── BUSINESS-DISCOVERY-TEMPLATE.md
+
 model/
 ├── README.md
 ├── UNIVERSAL-PRODUCT-MODEL.md
@@ -176,6 +200,7 @@ skills/
 ├── yon-qa/
 ├── yon-validate/
 ├── yon-product-model/
+├── yon-business-discovery/
 ├── yon-capability-discovery/
 ├── yon-capability-resolver/
 ├── yon-blueprint/
