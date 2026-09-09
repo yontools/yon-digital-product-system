@@ -45,12 +45,15 @@ Inspect the request, users, roles, jobs, workflows, constraints, existing behavi
 
 Identify the minimum behaviors needed for the requested outcome: entities and relationships, lifecycle/state changes, time rules, ownership, permissions, communications, transactions/documents when relevant, operational handoffs, and critical states.
 
+Use `capabilities/COMPOSITION-GUIDE.md` as a domain-neutral checklist for these dimensions. It is a reasoning aid, not a mandatory architecture.
+
 ### 3. Search YON knowledge
 
 Inspect:
 
 - `capabilities/INDEX.md`
 - `capabilities/CAPABILITY-MAP.md`
+- `capabilities/COMPOSITION-GUIDE.md`
 - individual capability files
 - `patterns/INDEX.md`
 - relevant pattern files
