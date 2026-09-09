@@ -18,6 +18,7 @@ Classifications produced by the Capability Resolver:
 
 | Name | File | Status | Domains |
 |---|---|---|---|
+| Party & Relationship Management | `party-relationship-management.md` | experimental | identity, relationships, organizations, roles, customers |
 | Asset Management | `asset-management.md` | experimental | assets, operations |
 | Audit History | `audit-history.md` | experimental | operations, compliance, debugging, security |
 | Geolocation & Tracking | `geolocation-tracking.md` | experimental | location, tracking, field operations |
