@@ -50,6 +50,7 @@ Para ver la guía completa: `INSTALL-CLAUDE-CODE.md`.
 - `yon-motion` — motion y microinteracciones
 - `yon-qa` — verificación del producto real
 - `yon-validate` — validación estructural y de producto
+- `yon-product-model` — modelado conceptual universal del producto
 - `yon-capability-discovery` — descubrimiento de capacidades, patrones y gaps
 - `yon-capability-resolver` — composición mínima de capacidades reutilizables
 - `yon-blueprint` — creación y refinamiento del Product Blueprint
@@ -57,6 +58,20 @@ Para ver la guía completa: `INSTALL-CLAUDE-CODE.md`.
 - `yon-learn` — promoción deliberada de conocimiento revisado hacia patterns/capabilities
 
 Las skills especializadas de `product-design`, `ux`, `ui`, `saas`, `onboarding` y `qa` aportan conocimiento reutilizable adicional.
+
+## Universal Product Model
+
+YON incorpora una capa conceptual anterior a las capabilities: el **Universal Product Model**.
+
+Su propósito es que YON pueda reconocer estructuras comunes entre productos de dominios muy diferentes sin imponer una arquitectura única. Usa primitivas como `Party`, `Relationship`, `Role`, `Resource`, `Action`, `Event`, `State`, `Time/Temporal Rule`, `Workflow`, `Transaction`, `Communication`, `Document` y `Permission/Boundary`.
+
+El modelo **no es** un esquema de base de datos, ORM, framework, arquitectura automática ni API universal. No todos los productos necesitan todas las primitivas y una primitiva conceptual no implica que deba existir una capability reutilizable.
+
+El flujo ampliado para productos suficientemente amplios es:
+
+`PRODUCT → UNIVERSAL MODEL → DISCOVERY → RESOLUTION → BLUEPRINT → IMPLEMENTATION → VERIFICATION`
+
+Referencia: `model/UNIVERSAL-PRODUCT-MODEL.md`.
 
 ## Descubrimiento, composición y Blueprint
 
@@ -142,6 +157,11 @@ El conocimiento generalizable puede evolucionar en YON; el material privado perm
 .claude-plugin/
 └── plugin.json
 
+model/
+├── README.md
+├── UNIVERSAL-PRODUCT-MODEL.md
+└── PRODUCT-MODEL-TEMPLATE.md
+
 skills/
 ├── yon/
 ├── yon-audit/
@@ -155,6 +175,7 @@ skills/
 ├── yon-motion/
 ├── yon-qa/
 ├── yon-validate/
+├── yon-product-model/
 ├── yon-capability-discovery/
 ├── yon-capability-resolver/
 ├── yon-blueprint/
