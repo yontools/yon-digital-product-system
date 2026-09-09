@@ -25,7 +25,7 @@ Inspect the repository, framework, routes, components, data flows, assets, depen
 
 Identify users, participants, roles, relationships, primary jobs, critical workflows, business constraints, success criteria, and existing behavior that must be preserved.
 
-For broad products, use the Universal Product Model to establish a lightweight conceptual vocabulary before capability resolution. Consult `model/UNIVERSAL-PRODUCT-MODEL.md` and use `model/PRODUCT-MODEL-TEMPLATE.md` only when the model materially improves the work.
+For broad products, first understand the **business operating model** when the request describes a real-world operation. Consult `discovery/BUSINESS-OPERATING-ARCHETYPES.md` through `yon-business-discovery` to identify reusable operating archetypes without turning the business category into a template. Then use the Universal Product Model to establish a lightweight conceptual vocabulary before capability resolution when materially useful. Consult `model/UNIVERSAL-PRODUCT-MODEL.md` and use `model/PRODUCT-MODEL-TEMPLATE.md` only when the model materially improves the work.
 
 ### DETECT
 
@@ -50,15 +50,16 @@ Prioritize by user impact, confidence, and effort. Do not change something merel
 
 Before implementation, discover and resolve reusable knowledge:
 
-1. Establish the relevant product model when the product is broad enough; do not over-model.
-2. Check `capabilities/INDEX.md` and `capabilities/CAPABILITY-MAP.md`.
-3. For broad, unfamiliar, or ambiguous problems, use `yon-capability-discovery` to decompose the workflow and detect genuine gaps.
-4. Use `yon-capability-resolver` to choose the smallest justified composition when reusable behaviors are involved.
-5. Check `patterns/INDEX.md` for recurring UX/UI solutions.
-6. Check `evidence/INDEX.md` when a decision depends on observations, experiments, runtime verification, regression results, or production outcomes.
-7. Classify candidates as `DIRECT`, `SUPPORTING`, `OPTIONAL`, `MISSING`, or `PRODUCT-SPECIFIC`.
-8. Prefer proven knowledge; validate experimental knowledge before treating it as established.
-9. If no reusable solution fits, record the gap instead of forcing a match.
+1. Establish the business operating model when the request describes a business operation and archetypes can improve discovery. Use `yon-business-discovery`; do not infer requirements from the vertical label alone.
+2. Establish the relevant product model when the product is broad enough; do not over-model.
+3. Check `capabilities/INDEX.md` and `capabilities/CAPABILITY-MAP.md`.
+4. For broad, unfamiliar, or ambiguous problems, use `yon-capability-discovery` to decompose the workflow and detect genuine gaps.
+5. Use `yon-capability-resolver` to choose the smallest justified composition when reusable behaviors are involved.
+6. Check `patterns/INDEX.md` for recurring UX/UI solutions.
+7. Check `evidence/INDEX.md` when a decision depends on observations, experiments, runtime verification, regression results, or production outcomes.
+8. Classify candidates as `DIRECT`, `SUPPORTING`, `OPTIONAL`, `MISSING`, or `PRODUCT-SPECIFIC`.
+9. Prefer proven knowledge; validate experimental knowledge before treating it as established.
+10. If no reusable solution fits, record the gap instead of forcing a match.
 
 ### IMPLEMENT
 
@@ -82,7 +83,9 @@ A pattern is a reusable solution to a recurring product/interface problem.
 
 Evidence is the support layer for these reusable decisions. It distinguishes what was observed or verified from what is inferred. Evidence does not automatically make a solution universal or `PROVEN`.
 
-The Universal Product Model is a conceptual layer before capability composition. It describes common primitives such as Party, Relationship, Role, Resource, Action, Event, State, Time/Temporal Rule, Workflow, Transaction, Communication, Document, and Permission/Boundary. It does not prescribe a schema, framework, architecture, or implementation.
+The **Business Discovery** layer describes recurring ways businesses operate, such as service delivery, scheduling, rental, field operations, fulfillment, case management, membership, marketplace matching, approvals, or intake/assessment. These are discovery hypotheses that help YON ask better questions and find reusable capabilities. They are not vertical templates, automatic feature lists, schemas, or architectures.
+
+The Universal Product Model is a conceptual layer after business understanding and before capability composition. It describes common primitives such as Party, Relationship, Role, Resource, Action, Event, State, Time/Temporal Rule, Workflow, Transaction, Communication, Document, and Permission/Boundary. It does not prescribe a schema, framework, architecture, or implementation.
 
 When a validated project solution appears broadly reusable, use `/yon-extract` to create a deliberate, privacy-checked extraction candidate. Extraction is separate from publication or promotion.
 
@@ -109,6 +112,9 @@ Do not declare a task complete merely because code compiles. Confirm the affecte
 ## Supporting YON references
 
 - Core rules: `YON.md`
+- Business discovery: `discovery/BUSINESS-OPERATING-ARCHETYPES.md`
+- Business discovery template: `discovery/BUSINESS-DISCOVERY-TEMPLATE.md`
+- Business discovery skill: `skills/yon-business-discovery/SKILL.md`
 - Universal Product Model: `model/UNIVERSAL-PRODUCT-MODEL.md`
 - Product Model template: `model/PRODUCT-MODEL-TEMPLATE.md`
 - Product model skill: `skills/yon-product-model/SKILL.md`
