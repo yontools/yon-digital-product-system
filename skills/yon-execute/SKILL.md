@@ -1,51 +1,53 @@
 ---
 name: yon-execute
-description: Execute an approved YON Product Blueprint through implementation, runtime inspection, correction, and proportional verification without turning YON into a rigid architecture generator.
+description: Execute an approved YON Product Blueprint through an evidence-driven execution plan, implementation, runtime inspection, correction, and proportional verification without turning YON into a rigid architecture generator.
 disable-model-invocation: true
 ---
 
 # YON Execution Engine
 
-Turn an approved Product Blueprint into a controlled implementation cycle.
+Turn an approved Product Blueprint into controlled implementation through a dependency-aware Execution Plan.
 
-The Execution Engine is an **orchestration contract**, not an autonomous permission to change anything. It connects product decisions to real implementation and evidence.
+The Execution Engine is an **orchestration contract**, not an autonomous permission to change anything. It connects product decisions to executable work, runtime evidence, correction, and verification.
 
 ## Position in YON
 
-`UNDERSTAND → BUSINESS DISCOVERY → PRODUCT MODEL → DISCOVER → RESOLVE → BLUEPRINT → EXECUTE → VERIFY → EVIDENCE`
+`UNDERSTAND → BUSINESS DISCOVERY → PRODUCT MODEL → DISCOVER → RESOLVE → BLUEPRINT → EXECUTION PLAN → EXECUTE → VERIFY → EVIDENCE`
 
 ## Core loop
 
 `PLAN → IMPLEMENT → RUN → INSPECT → CORRECT → VERIFY`
 
-Repeat the smallest useful cycle until the affected outcome is verified or execution is honestly blocked.
+The plan is the operational handoff. Use `yon-execution-plan` and `execution/EXECUTION-PLAN-TEMPLATE.md` before substantial implementation when a Blueprint contains multiple meaningful work items.
 
 ## Execution contract
 
 Before changing code:
 
 1. Read the approved Blueprint and project-local instructions.
-2. Confirm the primary outcome, critical workflow, affected scope, and success criteria.
-3. Identify implementation dependencies and high-risk boundaries.
-4. Convert Blueprint decisions into an ordered execution plan.
-5. Define the evidence required to consider each meaningful step complete.
+2. Confirm the primary outcome, critical workflow, affected scope, success criteria, and constraints.
+3. Identify dependencies and high-risk boundaries.
+4. Create or read the dependency-aware Execution Plan.
+5. Confirm each work item has Blueprint traceability, observable acceptance criteria, risk, dependencies, and verification evidence.
+6. Execute the smallest ready vertical slice.
 
 Do not invent missing product decisions during implementation. If a decision is required and not justified by the Blueprint or project-local authority, stop at the smallest boundary and record the unresolved question.
 
-## Execution plan
+## Execution states
 
-Each work item should contain:
+Plan states:
 
-- objective;
-- Blueprint traceability;
-- affected scope;
-- dependencies;
-- risk level;
-- expected behavior;
-- verification evidence;
-- completion state.
+`PLANNED → READY → IN_PROGRESS → VERIFYING → VERIFIED`
 
-Prefer vertical slices that produce observable user value over large disconnected technical batches.
+Execution states:
+
+`PLANNED → IN_PROGRESS → INSPECTING → CORRECTING → VERIFIED`
+
+If execution cannot proceed:
+
+`IN_PROGRESS / VERIFYING → BLOCKED`
+
+A blocked item must state the missing condition and next action. It must not be represented as verified.
 
 ## Implementation rules
 
@@ -55,12 +57,25 @@ Prefer vertical slices that produce observable user value over large disconnecte
 - Do not add dependencies, abstractions, modules, or screens solely for completeness.
 - Keep product-specific rules local unless the Blueprint explicitly resolves them as reusable.
 - Preserve tenancy, authorization, data boundaries, and existing integrations.
-- Treat authentication, authorization, billing, migrations, destructive actions, security controls, external integrations, and core business rules as high-risk.
+- Treat authentication, authorization, billing, migrations, destructive actions, security controls, external integrations, tenancy/isolation, and core business rules as high-risk.
 - Never expose or copy secrets, credentials, customer data, proprietary prompts, or confidential implementation details into reusable YON knowledge.
 
-## Run and inspect
+## Vertical-slice execution
 
-After each meaningful slice, run the real product as early as practical.
+Prefer work that can be demonstrated end-to-end. A slice may cross UI, application logic, data, integration, and tests when required to deliver the approved behavior.
+
+After each meaningful slice:
+
+1. Run the real product.
+2. Exercise its acceptance criteria.
+3. Inspect runtime behavior and critical states.
+4. Correct failures at the smallest responsible boundary.
+5. Re-run the affected journey and relevant regression checks.
+6. Record evidence.
+
+Do not wait until the end to discover that an early assumption was wrong.
+
+## Run and inspect
 
 Inspect proportionally:
 
@@ -107,6 +122,7 @@ Execution should pause rather than guess when:
 
 - the Blueprint contradicts project-local instructions;
 - a critical product decision is unresolved;
+- a required plan dependency is unresolved;
 - a high-risk change lacks sufficient authorization or evidence;
 - required access or infrastructure is unavailable;
 - continuing would expand scope materially beyond the approved outcome;
@@ -117,11 +133,12 @@ Execution should pause rather than guess when:
 Execution is complete only when:
 
 1. the approved outcome is implemented within scope;
-2. the critical affected journey works in the running product;
-3. relevant states and recovery paths are handled;
-4. proportional UX/UI/accessibility/runtime/security/regression checks are complete;
-5. no unresolved high-risk failure is hidden;
-6. evidence supports the final disposition;
-7. meaningful reusable findings are available for deliberate extraction, without publishing private information.
+2. all required in-scope plan slices are verified or an explicit final blocker is reported;
+3. the critical affected journey works in the running product;
+4. relevant states and recovery paths are handled;
+5. proportional UX/UI/accessibility/runtime/security/regression checks are complete;
+6. no unresolved high-risk failure is hidden;
+7. evidence supports the final disposition;
+8. meaningful reusable findings are available for deliberate extraction, without publishing private information.
 
 If completion is blocked, report the exact boundary, missing condition, impact, and next action instead of declaring success.
