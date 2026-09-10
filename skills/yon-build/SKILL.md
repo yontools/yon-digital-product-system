@@ -1,6 +1,6 @@
 ---
 name: yon-build
-description: Build a new SaaS, website, landing page, dashboard, or digital product with YON from requirements through Blueprint, execution planning, implementation, and verification.
+description: Build a new SaaS, website, landing page, dashboard, or digital product with YON from requirements through Blueprint, environment detection, execution planning, implementation, and verification.
 disable-model-invocation: true
 ---
 
@@ -10,7 +10,7 @@ YON Build turns an understood product request into a verified implementation. Fo
 
 ## Build sequence
 
-`UNDERSTAND → BUSINESS DISCOVERY → PRODUCT MODEL → DISCOVER → RESOLVE → BLUEPRINT → EXECUTION PLAN → EXECUTE → VERIFY`
+`UNDERSTAND → BUSINESS DISCOVERY → PRODUCT MODEL → DISCOVER → RESOLVE → BLUEPRINT → EXECUTION PLAN → ENVIRONMENT → EXECUTE → VERIFY`
 
 ### 1. Understand
 
@@ -46,17 +46,23 @@ The plan converts approved decisions into dependency-aware vertical slices with 
 
 Do not use technical file lists as a substitute for a user-value execution plan. Every meaningful slice must trace back to an outcome, workflow, and Blueprint decision.
 
-### 8. Execute
+### 8. Environment
 
-Use `yon-execute` to run the ready slices. Implement the smallest useful slice, run the real product, inspect the result, correct failures, and verify the slice before progressing when practical.
+Before concrete tool selection or execution in an unfamiliar/partially known project, use `yon-environment` to create or refresh an Environment Profile. Detect project/stack signals, verify actual tool availability when needed, separate availability from authorization, and record blockers/evidence without secrets.
+
+`DOCUMENTED ≠ AVAILABLE`. A configured provider or dependency is only a signal until the required capability is safely verified.
+
+### 9. Execute
+
+Use `yon-execute` to run the ready slices. Use `yon-orchestrate` as the operational layer for concrete tool selection. Implement the smallest useful slice, run the real product, inspect the result, correct failures, and verify the slice before progressing when practical.
 
 Do not silently invent unresolved product decisions. Pause at missing authorization/access, unresolved critical product behavior, or unverifiable high-risk boundaries and report the block.
 
-### 9. Run / Inspect / Correct
+### 10. Run / Inspect / Correct
 
 Run the real product as early as practical. Exercise critical workflows, inspect browser/runtime behavior, console/network failures, responsive states, accessibility behavior, and relevant data/security boundaries. Correct the smallest responsible cause and re-run the affected journey.
 
-### 10. Verify
+### 11. Verify
 
 Use `validation/INDEX.md` to select proportional gates. Verify the original user outcome end-to-end. Record meaningful findings as evidence when they can support future reusable knowledge.
 
