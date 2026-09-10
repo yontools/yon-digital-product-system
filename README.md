@@ -1,6 +1,6 @@
 # YON Digital Product System
 
-Sistema abierto de metodología, skills, patrones, capacidades, evidencia, agentes y ejecución para diseñar, construir, mejorar y verificar productos digitales.
+Sistema abierto de metodología, skills, patrones, capacidades, evidencia, agentes, planificación y ejecución para diseñar, construir, mejorar y verificar productos digitales.
 
 ## Qué es YON
 
@@ -43,6 +43,7 @@ Para ver la guía completa: `INSTALL-CLAUDE-CODE.md`.
 - `yon-polish` — mejora segura de producto existente
 - `yon-build` — construcción de un producto nuevo
 - `yon-execute` — ejecución controlada de un Blueprint mediante slices, runtime inspection, corrección y verificación
+- `yon-execution-plan` — convierte un Blueprint en slices ejecutables, dependencias, criterios de aceptación y checkpoints de verificación
 - `yon-saas` — diseño y construcción de SaaS
 - `yon-web` — sitios web
 - `yon-landing` — landing pages
@@ -85,13 +86,13 @@ Su propósito es que YON pueda reconocer estructuras comunes entre productos de 
 
 El modelo **no es** un esquema de base de datos, ORM, framework, arquitectura automática ni API universal. No todos los productos necesitan todas las primitivas y una primitiva conceptual no implica que deba existir una capability reutilizable.
 
-## Descubrimiento, composición y Blueprint
+## Descubrimiento, composición, Blueprint y ejecución
 
-YON separa **descubrir**, **resolver** y **definir el contrato de construcción**.
+YON separa **descubrir**, **resolver**, **definir el contrato de construcción**, **planificar** y **ejecutar**.
 
 El flujo para productos amplios es:
 
-`PROBLEMA → BUSINESS DISCOVERY → UNIVERSAL MODEL → DISCOVERY → RESOLUTION → BLUEPRINT → EXECUTION → VERIFICACIÓN`
+`PROBLEMA → BUSINESS DISCOVERY → UNIVERSAL MODEL → DISCOVERY → RESOLUTION → BLUEPRINT → EXECUTION PLAN → EXECUTION → VERIFICACIÓN`
 
 `yon-business-discovery` entiende el modelo operativo del negocio y evita inferir requisitos desde la etiqueta del rubro.
 
@@ -101,25 +102,25 @@ El flujo para productos amplios es:
 
 `yon-blueprint` convierte el entendimiento y la resolución en un **Product Blueprint**: participantes, relaciones, jobs, workflows, entidades, lifecycle, capacidades, patrones, gaps, comportamiento específico, riesgos y gates de verificación.
 
-`yon-execute` convierte ese contrato en trabajo ejecutable: planifica slices, implementa, ejecuta el producto real, inspecciona, corrige y vuelve a verificar. Si una decisión crítica no está resuelta o una verificación de alto riesgo no puede realizarse, bloquea en lugar de inventar o declarar éxito.
+`yon-execution-plan` transforma el Blueprint en un plan operativo: slices verticales, dependencias, criterios de aceptación observables, riesgos, checkpoints, regresiones y condiciones de bloqueo.
 
-El Blueprint y la Execution Engine son contratos de decisión/orquestación, no una arquitectura automática ni un esquema de base de datos. No autorizan a cambiar innecesariamente un producto que ya funciona.
+`yon-execute` utiliza ese plan para implementar, ejecutar el producto real, inspeccionar, corregir y volver a verificar. Si una decisión crítica no está resuelta o una verificación de alto riesgo no puede realizarse, bloquea en lugar de inventar o declarar éxito.
 
-Los Blueprints reutilizan `blueprints/BLUEPRINT-TEMPLATE.md` y nunca deben contener secretos, datos privados, código propietario ni reglas de negocio identificables.
+El Blueprint, Execution Plan y Execution Engine son contratos de decisión/orquestación, no una arquitectura automática ni un esquema de base de datos. No autorizan a cambiar innecesariamente un producto que ya funciona.
 
 ## Ejecución controlada
 
-El Execution Engine usa el ciclo:
+El plan sigue:
 
-`PLAN → IMPLEMENT → RUN → INSPECT → CORRECT → VERIFY`
+`PLANNED → READY → IN_PROGRESS → VERIFYING → VERIFIED`
 
-Los work items siguen:
+La ejecución sigue:
 
 `PLANNED → IN_PROGRESS → INSPECTING → CORRECTING → VERIFIED`
 
 o, cuando corresponde:
 
-`IN_PROGRESS → BLOCKED`
+`IN_PROGRESS / VERIFYING → BLOCKED`
 
 `BLOCKED` nunca equivale a `VERIFIED` ni a `PASS`.
 
@@ -207,6 +208,7 @@ skills/
 ├── yon-polish/
 ├── yon-build/
 ├── yon-execute/
+├── yon-execution-plan/
 ├── yon-saas/
 ├── yon-web/
 ├── yon-landing/
@@ -238,6 +240,10 @@ agents/
 blueprints/
 ├── README.md
 └── BLUEPRINT-TEMPLATE.md
+
+execution/
+├── README.md
+└── EXECUTION-PLAN-TEMPLATE.md
 
 capabilities/
 patterns/
