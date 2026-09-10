@@ -12,13 +12,13 @@ The Execution Engine is an **orchestration contract**, not an autonomous permiss
 
 ## Position in YON
 
-`UNDERSTAND → BUSINESS DISCOVERY → PRODUCT MODEL → DISCOVER → RESOLVE → BLUEPRINT → EXECUTION PLAN → EXECUTE → VERIFY → EVIDENCE`
+`UNDERSTAND → BUSINESS DISCOVERY → PRODUCT MODEL → DISCOVER → RESOLVE → BLUEPRINT → EXECUTION PLAN → ORCHESTRATE → EXECUTE → VERIFY → EVIDENCE`
 
 ## Core loop
 
-`PLAN → IMPLEMENT → RUN → INSPECT → CORRECT → VERIFY`
+`PLAN → SELECT TOOL → AUTHORIZE → IMPLEMENT → RUN → INSPECT → CORRECT → VERIFY`
 
-The plan is the operational handoff. Use `yon-execution-plan` and `execution/EXECUTION-PLAN-TEMPLATE.md` before substantial implementation when a Blueprint contains multiple meaningful work items.
+The plan is the operational handoff. Use `yon-execution-plan` and `execution/EXECUTION-PLAN-TEMPLATE.md` before substantial implementation when a Blueprint contains multiple meaningful work items. Use `yon-orchestrate` whenever a work item requires a real tool action.
 
 ## Execution contract
 
@@ -29,9 +29,24 @@ Before changing code:
 3. Identify dependencies and high-risk boundaries.
 4. Create or read the dependency-aware Execution Plan.
 5. Confirm each work item has Blueprint traceability, observable acceptance criteria, risk, dependencies, and verification evidence.
-6. Execute the smallest ready vertical slice.
+6. Select the smallest sufficient tool for the next action through `yon-orchestrate`.
+7. Execute the smallest ready vertical slice.
 
 Do not invent missing product decisions during implementation. If a decision is required and not justified by the Blueprint or project-local authority, stop at the smallest boundary and record the unresolved question.
+
+## Tool orchestration
+
+Every meaningful tool-mediated action should follow:
+
+`PLANNED → AUTHORIZED → EXECUTING → OBSERVING → DECIDING → COMPLETED`
+
+or, when a critical condition is missing:
+
+`... → BLOCKED`
+
+Tool choice must be proportional to the question. Static inspection is preferred when sufficient; runtime/browser/tests are used when they provide evidence that static inspection cannot. Deployment and infrastructure mutations are high-risk unless the environment explicitly establishes otherwise.
+
+Never claim a tool was run, a deployment succeeded, a test passed, or a browser state was inspected without actual evidence.
 
 ## Execution states
 
