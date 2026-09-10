@@ -1,12 +1,12 @@
 # YON Digital Product System
 
-Sistema abierto de metodología, skills, patrones, capacidades, evidencia, agentes, planificación y ejecución para diseñar, construir, mejorar y verificar productos digitales.
+Sistema abierto de metodología, skills, patrones, capacidades, evidencia, agentes, planificación, orquestación y ejecución para diseñar, construir, mejorar y verificar productos digitales.
 
 ## Qué es YON
 
 YON es un sistema operativo de product-engineering para trabajar con IA sobre productos reales. No es solamente una colección de prompts ni un UI kit.
 
-Su objetivo es que una IA pueda entender el producto antes de modificarlo, detectar oportunidades de mejora, reutilizar soluciones probadas, convertir decisiones en un plan controlado, implementar, inspeccionar el producto real, corregir y verificar el resultado.
+Su objetivo es que una IA pueda entender el producto antes de modificarlo, detectar oportunidades de mejora, reutilizar soluciones probadas, convertir decisiones en un plan controlado, seleccionar las herramientas adecuadas, implementar, inspeccionar el producto real, corregir y verificar el resultado.
 
 ## Flujo central
 
@@ -44,6 +44,7 @@ Para ver la guía completa: `INSTALL-CLAUDE-CODE.md`.
 - `yon-build` — construcción de un producto nuevo
 - `yon-execute` — ejecución controlada de un Blueprint mediante slices, runtime inspection, corrección y verificación
 - `yon-execution-plan` — convierte un Blueprint en slices ejecutables, dependencias, criterios de aceptación y checkpoints de verificación
+- `yon-orchestrate` — selecciona y coordina la herramienta mínima necesaria para ejecutar una acción real con autorización, riesgo y evidencia
 - `yon-saas` — diseño y construcción de SaaS
 - `yon-web` — sitios web
 - `yon-landing` — landing pages
@@ -88,11 +89,11 @@ El modelo **no es** un esquema de base de datos, ORM, framework, arquitectura au
 
 ## Descubrimiento, composición, Blueprint y ejecución
 
-YON separa **descubrir**, **resolver**, **definir el contrato de construcción**, **planificar** y **ejecutar**.
+YON separa **descubrir**, **resolver**, **definir el contrato de construcción**, **planificar**, **orquestar** y **ejecutar**.
 
 El flujo para productos amplios es:
 
-`PROBLEMA → BUSINESS DISCOVERY → UNIVERSAL MODEL → DISCOVERY → RESOLUTION → BLUEPRINT → EXECUTION PLAN → EXECUTION → VERIFICACIÓN`
+`PROBLEMA → BUSINESS DISCOVERY → UNIVERSAL MODEL → DISCOVERY → RESOLUTION → BLUEPRINT → EXECUTION PLAN → ORCHESTRATION → EXECUTION → VERIFICACIÓN`
 
 `yon-business-discovery` entiende el modelo operativo del negocio y evita inferir requisitos desde la etiqueta del rubro.
 
@@ -104,9 +105,31 @@ El flujo para productos amplios es:
 
 `yon-execution-plan` transforma el Blueprint en un plan operativo: slices verticales, dependencias, criterios de aceptación observables, riesgos, checkpoints, regresiones y condiciones de bloqueo.
 
-`yon-execute` utiliza ese plan para implementar, ejecutar el producto real, inspeccionar, corregir y volver a verificar. Si una decisión crítica no está resuelta o una verificación de alto riesgo no puede realizarse, bloquea en lugar de inventar o declarar éxito.
+`yon-orchestrate` conecta cada slice con la herramienta concreta que pueda producir la evidencia necesaria: repositorio, terminal, browser, tests, GitHub, deployment/infrastructure, database o visual/media. La herramienta se elige por suficiencia de evidencia, no por disponibilidad o moda.
 
-El Blueprint, Execution Plan y Execution Engine son contratos de decisión/orquestación, no una arquitectura automática ni un esquema de base de datos. No autorizan a cambiar innecesariamente un producto que ya funciona.
+`yon-execute` utiliza ese plan y la capa de orquestación para implementar, ejecutar el producto real, inspeccionar, corregir y volver a verificar. Si una decisión crítica no está resuelta o una verificación de alto riesgo no puede realizarse, bloquea en lugar de inventar o declarar éxito.
+
+El Blueprint, Execution Plan, Orchestration Layer y Execution Engine son contratos de decisión/orquestación, no una arquitectura automática ni un esquema de base de datos. No autorizan a cambiar innecesariamente un producto que ya funciona.
+
+## Tool & Execution Orchestration
+
+La capa `orchestration/` define el contrato entre la intención de YON y las herramientas reales del entorno.
+
+Su principio es:
+
+`DECIDE → SELECT TOOL → AUTHORIZE → EXECUTE → OBSERVE → DECIDE NEXT → VERIFY`
+
+YON usa un **Tool Capability Registry** para separar la capacidad abstracta de su implementación concreta. Una capacidad no se considera disponible simplemente porque esté documentada: el entorno debe confirmar que el adaptador existe, está autorizado y puede producir evidencia.
+
+Referencia: `orchestration/README.md`, `orchestration/TOOL-CAPABILITY-REGISTRY.md`, `orchestration/TOOL-CAPABILITY-MATRIX.md` y `orchestration/TOOL-ADAPTER-TEMPLATE.md`.
+
+### Regla fundamental
+
+`DOCUMENTED ≠ AVAILABLE`
+
+Si una herramienta necesaria no existe, no está autorizada o no puede producir la evidencia requerida, YON debe usar una alternativa segura cuando sea equivalente o marcar `BLOCKED`.
+
+El objetivo no es utilizar muchas herramientas. Es producir el máximo progreso justificable con el mínimo riesgo y la mínima complejidad.
 
 ## Ejecución controlada
 
@@ -121,6 +144,10 @@ La ejecución sigue:
 o, cuando corresponde:
 
 `IN_PROGRESS / VERIFYING → BLOCKED`
+
+La orquestación añade:
+
+`PLANNED → AUTHORIZED → EXECUTING → OBSERVING → DECIDING → COMPLETED`
 
 `BLOCKED` nunca equivale a `VERIFIED` ni a `PASS`.
 
@@ -209,6 +236,7 @@ skills/
 ├── yon-build/
 ├── yon-execute/
 ├── yon-execution-plan/
+├── yon-orchestrate/
 ├── yon-saas/
 ├── yon-web/
 ├── yon-landing/
@@ -244,6 +272,12 @@ blueprints/
 execution/
 ├── README.md
 └── EXECUTION-PLAN-TEMPLATE.md
+
+orchestration/
+├── README.md
+├── TOOL-CAPABILITY-REGISTRY.md
+├── TOOL-CAPABILITY-MATRIX.md
+└── TOOL-ADAPTER-TEMPLATE.md
 
 capabilities/
 patterns/
