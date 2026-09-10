@@ -38,31 +38,18 @@ def frontmatter(text: str) -> dict[str, str]:
 
 def check_required_files() -> None:
     required = [
-        ".claude-plugin/plugin.json",
-        "YON.md",
-        "README.md",
-        "CONTRIBUTING.md",
-        "INSTALL-CLAUDE-CODE.md",
-        "skills/yon/SKILL.md",
-        "skills/yon-environment/SKILL.md",
-        "skills/yon-orchestrate/SKILL.md",
-        "commands/yon-environment.md",
-        "commands/yon-orchestrate.md",
-        "adapters/claude-code/CLAUDE.md",
-        "capabilities/INDEX.md",
-        "patterns/INDEX.md",
-        "evidence/INDEX.md",
-        "validation/INDEX.md",
-        "environment/README.md",
-        "environment/DETECTION-RULES.md",
-        "environment/ENVIRONMENT-PROFILE-TEMPLATE.md",
-        "orchestration/README.md",
-        "orchestration/TOOL-CAPABILITY-REGISTRY.md",
-        "orchestration/TOOL-CAPABILITY-MATRIX.md",
-        "orchestration/TOOL-ADAPTER-TEMPLATE.md",
-        "scripts/detect_environment.py",
-        "scripts/validate_yon.py",
-        ".github/workflows/validate.yml",
+        ".claude-plugin/plugin.json", "YON.md", "README.md", "CONTRIBUTING.md",
+        "INSTALL-CLAUDE-CODE.md", "skills/yon/SKILL.md",
+        "skills/yon-environment/SKILL.md", "skills/yon-tool-registry/SKILL.md",
+        "skills/yon-orchestrate/SKILL.md", "commands/yon-environment.md",
+        "commands/yon-tool-registry.md", "commands/yon-orchestrate.md",
+        "adapters/claude-code/CLAUDE.md", "capabilities/INDEX.md", "patterns/INDEX.md",
+        "evidence/INDEX.md", "validation/INDEX.md", "environment/README.md",
+        "environment/DETECTION-RULES.md", "environment/ENVIRONMENT-PROFILE-TEMPLATE.md",
+        "environment/TOOL-REGISTRY-BRIDGE.md", "orchestration/README.md",
+        "orchestration/TOOL-CAPABILITY-REGISTRY.md", "orchestration/TOOL-CAPABILITY-MATRIX.md",
+        "orchestration/TOOL-ADAPTER-TEMPLATE.md", "scripts/detect_environment.py",
+        "scripts/validate_yon.py", ".github/workflows/validate.yml",
     ]
     for rel in required:
         if not (ROOT / rel).is_file():
@@ -114,8 +101,11 @@ def check_environment_contract() -> None:
         "environment/README.md": ("Environment Profile", "DOCUMENTED ≠ AVAILABLE", "UNAUTHORIZED", "Privacy"),
         "environment/DETECTION-RULES.md": ("Project detection", "Tool detection", "Authority detection", "Conflict resolution"),
         "environment/ENVIRONMENT-PROFILE-TEMPLATE.md": ("Stack signals", "Tool adapters", "Authority", "Blockers", "Privacy"),
+        "environment/TOOL-REGISTRY-BRIDGE.md": ("ACTUAL", "CONFIGURED", "SIGNALLED", "UNKNOWN", "Drift", "Privacy"),
         "skills/yon-environment/SKILL.md": ("INSPECT", "SIGNAL", "PROBE SAFELY", "CLASSIFY", "PROFILE", "HANDOFF"),
+        "skills/yon-tool-registry/SKILL.md": ("READ PROFILE", "RESOLVE STATUS", "CHECK AUTHORITY", "MATCH CAPABILITY", "UNKNOWN"),
         "commands/yon-environment.md": ("Environment Profile", "read-only", "BLOCKED"),
+        "commands/yon-tool-registry.md": ("Environment Profile", "BLOCKED", "secrets"),
         "scripts/detect_environment.py": ("secret_values_read", "tool_states", "authorization"),
     }
     for rel, terms in required_terms.items():
@@ -134,7 +124,7 @@ def check_orchestration_contract() -> None:
         "orchestration/TOOL-CAPABILITY-REGISTRY.md": ("DOCUMENTED ≠ AVAILABLE", "availability_status", "risk"),
         "orchestration/TOOL-CAPABILITY-MATRIX.md": ("Minimum evidence", "Fallback policy", "No-tool rule"),
         "orchestration/TOOL-ADAPTER-TEMPLATE.md": ("Inputs", "Outputs", "Risk", "Privacy"),
-        "skills/yon-orchestrate/SKILL.md": ("DECIDE", "SELECT", "AUTHORIZE", "EXECUTE", "OBSERVE", "DECIDE NEXT", "yon-environment"),
+        "skills/yon-orchestrate/SKILL.md": ("DECIDE", "SELECT", "AUTHORIZE", "EXECUTE", "OBSERVE", "DECIDE NEXT", "yon-tool-registry"),
     }
     for rel, terms in required_terms.items():
         path = ROOT / rel
@@ -153,13 +143,11 @@ def main() -> int:
     check_knowledge_directories()
     check_environment_contract()
     check_orchestration_contract()
-
     if ERRORS:
         print(f"YON validation FAILED: {len(ERRORS)} issue(s)")
         for error in ERRORS:
             print(f"- {error}")
         return 1
-
     skills = [p for p in (ROOT / "skills").iterdir() if p.is_dir()]
     commands = list((ROOT / "commands").glob("*.md")) if (ROOT / "commands").is_dir() else []
     print(f"YON validation PASS — {len(skills)} skills, {len(commands)} commands, core structure coherent.")
