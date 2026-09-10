@@ -44,17 +44,23 @@ def check_required_files() -> None:
         "CONTRIBUTING.md",
         "INSTALL-CLAUDE-CODE.md",
         "skills/yon/SKILL.md",
+        "skills/yon-environment/SKILL.md",
         "skills/yon-orchestrate/SKILL.md",
+        "commands/yon-environment.md",
         "commands/yon-orchestrate.md",
         "adapters/claude-code/CLAUDE.md",
         "capabilities/INDEX.md",
         "patterns/INDEX.md",
         "evidence/INDEX.md",
         "validation/INDEX.md",
+        "environment/README.md",
+        "environment/DETECTION-RULES.md",
+        "environment/ENVIRONMENT-PROFILE-TEMPLATE.md",
         "orchestration/README.md",
         "orchestration/TOOL-CAPABILITY-REGISTRY.md",
         "orchestration/TOOL-CAPABILITY-MATRIX.md",
         "orchestration/TOOL-ADAPTER-TEMPLATE.md",
+        "scripts/detect_environment.py",
         "scripts/validate_yon.py",
         ".github/workflows/validate.yml",
     ]
@@ -103,13 +109,32 @@ def check_knowledge_directories() -> None:
             fail(f"missing knowledge README: {directory}/README.md")
 
 
+def check_environment_contract() -> None:
+    required_terms = {
+        "environment/README.md": ("Environment Profile", "DOCUMENTED ≠ AVAILABLE", "UNAUTHORIZED", "Privacy"),
+        "environment/DETECTION-RULES.md": ("Project detection", "Tool detection", "Authority detection", "Conflict resolution"),
+        "environment/ENVIRONMENT-PROFILE-TEMPLATE.md": ("Stack signals", "Tool adapters", "Authority", "Blockers", "Privacy"),
+        "skills/yon-environment/SKILL.md": ("INSPECT", "SIGNAL", "PROBE SAFELY", "CLASSIFY", "PROFILE", "HANDOFF"),
+        "commands/yon-environment.md": ("Environment Profile", "read-only", "BLOCKED"),
+        "scripts/detect_environment.py": ("secret_values_read", "tool_states", "authorization"),
+    }
+    for rel, terms in required_terms.items():
+        path = ROOT / rel
+        if not path.is_file():
+            continue
+        text = read_text(path)
+        for term in terms:
+            if term not in text:
+                fail(f"environment contract missing '{term}' in {rel}")
+
+
 def check_orchestration_contract() -> None:
     required_terms = {
-        "orchestration/README.md": ("SELECT TOOL", "AUTHORIZE", "OBSERVE", "BLOCKED"),
+        "orchestration/README.md": ("SELECT TOOL", "AUTHORIZE", "OBSERVE", "BLOCKED", "Environment Profile"),
         "orchestration/TOOL-CAPABILITY-REGISTRY.md": ("DOCUMENTED ≠ AVAILABLE", "availability_status", "risk"),
         "orchestration/TOOL-CAPABILITY-MATRIX.md": ("Minimum evidence", "Fallback policy", "No-tool rule"),
         "orchestration/TOOL-ADAPTER-TEMPLATE.md": ("Inputs", "Outputs", "Risk", "Privacy"),
-        "skills/yon-orchestrate/SKILL.md": ("DECIDE", "SELECT", "AUTHORIZE", "EXECUTE", "OBSERVE", "DECIDE NEXT"),
+        "skills/yon-orchestrate/SKILL.md": ("DECIDE", "SELECT", "AUTHORIZE", "EXECUTE", "OBSERVE", "DECIDE NEXT", "yon-environment"),
     }
     for rel, terms in required_terms.items():
         path = ROOT / rel
@@ -126,6 +151,7 @@ def main() -> int:
     check_plugin()
     check_skills()
     check_knowledge_directories()
+    check_environment_contract()
     check_orchestration_contract()
 
     if ERRORS:
