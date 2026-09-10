@@ -1,6 +1,6 @@
 ---
 name: yon-orchestrate
-description: Select and coordinate the smallest sufficient development, runtime, browser, test, GitHub, deployment, or media tool for a YON action, using the detected environment profile, explicit authorization, observation, risk, evidence, and blocking rules.
+description: Select and coordinate the smallest sufficient development, runtime, browser, test, GitHub, deployment, or media tool for a YON action, using the detected environment and resolved Tool Registry, explicit authorization, observation, risk, evidence, and blocking rules.
 disable-model-invocation: true
 ---
 
@@ -10,13 +10,13 @@ Use this skill when YON needs to move from a product decision or execution-plan 
 
 ## Position
 
-`BLUEPRINT → EXECUTION PLAN → ENVIRONMENT → ORCHESTRATE → EXECUTE → OBSERVE → DECIDE NEXT → VERIFY`
+`BLUEPRINT → EXECUTION PLAN → ENVIRONMENT → TOOL REGISTRY → ORCHESTRATE → EXECUTE → OBSERVE → DECIDE NEXT → VERIFY`
 
 Orchestration is a control layer, not an architecture generator and not permission to expand scope.
 
 ## Operating loop
 
-`DECIDE → DETECT/REFRESH → SELECT → AUTHORIZE → EXECUTE → OBSERVE → DECIDE NEXT`
+`DECIDE → DETECT/REFRESH → RESOLVE REGISTRY → SELECT → AUTHORIZE → EXECUTE → OBSERVE → DECIDE NEXT`
 
 ### 1. DECIDE
 
@@ -24,19 +24,23 @@ State the smallest outcome the action must produce. Tie it to the approved Bluep
 
 ### 2. DETECT / REFRESH
 
-If the environment profile is missing, stale, incomplete for the intended action, or tool availability is unknown, use `yon-environment` before selecting the concrete tool.
+If the environment profile is missing, stale, incomplete for the intended action, or tool availability is unknown, use `yon-environment` before selecting a concrete tool.
 
-Use the profile to distinguish:
+### 3. RESOLVE REGISTRY
 
-- project/stack signals
-- actual tool availability
-- authorization
-- verification capability
-- unresolved blockers
+Use `yon-tool-registry` to turn environment evidence into concrete adapter states. Read `environment/TOOL-REGISTRY-BRIDGE.md` for the resolution contract.
 
-Never infer `AVAILABLE` from documentation or configuration alone.
+Each adapter must be explicitly classified as:
 
-### 3. SELECT
+`AVAILABLE | UNAVAILABLE | UNAUTHORIZED | DEGRADED | UNKNOWN`
+
+Use evidence precedence:
+
+`ACTUAL > AUTHORIZED > CONFIGURED > SIGNALLED > ASSUMED`
+
+Configuration or package signals never prove that a tool is available. `UNKNOWN` must be probed safely or remain `BLOCKED`.
+
+### 4. SELECT
 
 Choose the smallest available tool class that can produce sufficient evidence:
 
@@ -52,7 +56,7 @@ Choose the smallest available tool class that can produce sufficient evidence:
 
 Do not use a larger or riskier tool merely because it is available.
 
-### 4. AUTHORIZE
+### 5. AUTHORIZE
 
 Classify the action:
 
@@ -62,11 +66,11 @@ Classify the action:
 
 For HIGH actions, require explicit authorization and proportional verification. If authorization or verification is missing, stop as `BLOCKED`.
 
-### 5. EXECUTE
+### 6. EXECUTE
 
 Use the minimum input and minimum scope required. Respect repository-local instructions and project boundaries. Never fabricate tool availability, command output, screenshots, test results, deployments, or successful changes.
 
-### 6. OBSERVE
+### 7. OBSERVE
 
 After every meaningful mutation, inspect its real result. Observation may include:
 
@@ -81,7 +85,7 @@ After every meaningful mutation, inspect its real result. Observation may includ
 
 Convert observations into evidence before deciding the next action.
 
-### 7. DECIDE NEXT
+### 8. DECIDE NEXT
 
 Continue only when the observed result justifies another action. If a failure can be corrected safely, return to `EXECUTE`. If a critical condition is missing, enter `BLOCKED`.
 
