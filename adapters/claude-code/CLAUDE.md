@@ -15,6 +15,7 @@ Before changing a project:
 3. Read the relevant command under `commands/`.
 4. Inspect the target project's own instructions (`CLAUDE.md`, `AGENTS.md`, README, package scripts, and relevant docs).
 5. Inspect the existing implementation before proposing changes.
+6. When execution requires real tool actions, load `skills/yon-orchestrate/SKILL.md` and follow its tool-selection and authorization rules.
 
 Do not assume a project uses a particular framework, database, or deployment provider until the repository confirms it.
 
@@ -23,6 +24,9 @@ Do not assume a project uses a particular framework, database, or deployment pro
 - Audit an existing product → `commands/yon-audit.md`
 - Polish an existing product → `commands/yon-polish.md`
 - Build a new product → `commands/yon-build.md`
+- Execute an approved plan → `commands/yon-execute.md`
+- Create an execution plan → `commands/yon-execution-plan.md`
+- Orchestrate a real tool action → `commands/yon-orchestrate.md`
 - SaaS-specific work → `commands/yon-saas.md`
 - Website → `commands/yon-web.md`
 - Landing page → `commands/yon-landing.md`
@@ -35,7 +39,33 @@ Do not assume a project uses a particular framework, database, or deployment pro
 
 `OBSERVE → UNDERSTAND → DETECT → PROPOSE → IMPLEMENT → RUN → INSPECT → CORRECT → VERIFY`
 
-Do not stop after writing code when the environment allows execution and verification.
+For tool-mediated execution, YON adds:
+
+`DECIDE → SELECT TOOL → AUTHORIZE → EXECUTE → OBSERVE → DECIDE NEXT`
+
+Do not stop after writing code when the environment allows execution and verification. Do not claim a tool action occurred without actual evidence.
+
+## Tool selection
+
+Use the smallest available tool that can establish the required evidence:
+
+- repository/filesystem for static inspection and edits
+- terminal/runtime for scripts, builds, servers and commands
+- browser/automation for real interactive behavior
+- tests for repeatable acceptance evidence
+- GitHub for repository/CI collaboration state
+- deployment/infrastructure for hosted state or deployment operations
+- visual/media for meaningful product assets
+
+Do not invoke a larger or riskier tool merely because it is available.
+
+## Authorization and risk
+
+- `LOW`: read-only inspection, local tests, non-destructive browser QA.
+- `MEDIUM`: edits, dependency installation, generated assets, commits, reversible repository changes.
+- `HIGH`: production deployment, migrations, billing, auth/authz, destructive operations, security-sensitive changes, critical external integrations, or core business rules.
+
+HIGH-risk actions require explicit authorization and proportional verification. If the required permission or verification is unavailable, mark the action `BLOCKED`.
 
 ## Reuse principle
 
@@ -46,8 +76,10 @@ A private project's code, secrets, data, customer information, prompts, business
 ## Change safety
 
 - Preserve working behavior unless there is a clear reason to change it.
+- Inspect before mutate.
 - Prefer small, reversible changes.
 - Treat auth, payments, permissions, data migrations, destructive operations, and production infrastructure as high-risk.
+- Observe meaningful mutations before deciding the next action.
 - Verify high-risk changes explicitly before considering them complete.
 
 ## Definition of done
@@ -62,6 +94,8 @@ A task is not complete merely because the code compiles. When applicable, verify
 - console/runtime errors
 - affected integrations
 - tests and build
+
+`BLOCKED` is never `PASS` or `VERIFIED`.
 
 ## Private project boundary
 
