@@ -14,8 +14,9 @@ Before changing a project:
 2. Read the relevant skill under `skills/`.
 3. Read the relevant command under `commands/`.
 4. Inspect the target project's own instructions (`CLAUDE.md`, `AGENTS.md`, README, package scripts, and relevant docs).
-5. Inspect the existing implementation before proposing changes.
-6. When execution requires real tool actions, load `skills/yon-orchestrate/SKILL.md` and follow its tool-selection and authorization rules.
+5. If the project or required tooling is unfamiliar, run the YON Environment Detection flow and build/refresh an Environment Profile.
+6. Inspect the existing implementation before proposing changes.
+7. When execution requires real tool actions, load `skills/yon-orchestrate/SKILL.md` and follow its tool-selection and authorization rules.
 
 Do not assume a project uses a particular framework, database, or deployment provider until the repository confirms it.
 
@@ -24,6 +25,7 @@ Do not assume a project uses a particular framework, database, or deployment pro
 - Audit an existing product → `commands/yon-audit.md`
 - Polish an existing product → `commands/yon-polish.md`
 - Build a new product → `commands/yon-build.md`
+- Detect/refresh environment → `commands/yon-environment.md`
 - Execute an approved plan → `commands/yon-execute.md`
 - Create an execution plan → `commands/yon-execution-plan.md`
 - Orchestrate a real tool action → `commands/yon-orchestrate.md`
@@ -39,11 +41,33 @@ Do not assume a project uses a particular framework, database, or deployment pro
 
 `OBSERVE → UNDERSTAND → DETECT → PROPOSE → IMPLEMENT → RUN → INSPECT → CORRECT → VERIFY`
 
+For environment-aware execution, detection adds:
+
+`DETECT PROJECT → DETECT STACK → DETECT TOOLS → DETECT AUTHORITY → BUILD PROFILE`
+
 For tool-mediated execution, YON adds:
 
 `DECIDE → SELECT TOOL → AUTHORIZE → EXECUTE → OBSERVE → DECIDE NEXT`
 
 Do not stop after writing code when the environment allows execution and verification. Do not claim a tool action occurred without actual evidence.
+
+## Environment profile
+
+Use `yon-environment` when tool availability or project context is unknown, incomplete or stale.
+
+The profile must distinguish:
+
+- repository/project signals
+- actual executable availability
+- authorization for the requested action
+- verification capability
+- blockers and unknowns
+
+`DOCUMENTED ≠ AVAILABLE`.
+
+Repository configuration can establish a signal, but only a safe observable check can establish actual tool availability. Tool availability never implies authorization.
+
+Never expose secret values while detecting the environment. Do not install, deploy, migrate, delete or mutate production merely to prove that a capability exists.
 
 ## Tool selection
 
