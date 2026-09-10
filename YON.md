@@ -54,6 +54,36 @@ Fix regressions and incomplete states. Do not stop at the first successful build
 ### 9. VERIFY
 Confirm the original goal was achieved and existing important behavior still works.
 
+## Environment awareness
+
+Before YON chooses concrete tools in an unfamiliar or partially known project, it can build an **Environment Profile** with `yon-environment`.
+
+The environment layer answers:
+
+- where the project actually lives;
+- what stack and project signals exist;
+- which tools are actually available;
+- which tools are merely signalled by configuration;
+- what authority exists for the intended action;
+- what remains unknown;
+- what evidence supports each conclusion.
+
+The flow is:
+
+`DETECT PROJECT → DETECT STACK → DETECT TOOLS → DETECT AUTHORITY → BUILD PROFILE → ORCHESTRATE`
+
+Availability states are:
+
+`UNKNOWN | SIGNALLED | AVAILABLE | UNAVAILABLE | UNAUTHORIZED | DEGRADED`
+
+The precedence rule is:
+
+`actual availability > local instructions/config > manifests/scripts > generic assumptions`
+
+`DOCUMENTED ≠ AVAILABLE`.
+
+Detection is read-only and privacy-preserving by default. It must never print secrets or mutate production merely to prove that a tool exists.
+
 ## Decision framework
 
 For every proposed change ask:
