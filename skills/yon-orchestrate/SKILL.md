@@ -1,6 +1,6 @@
 ---
 name: yon-orchestrate
-description: Select and coordinate the smallest sufficient development, runtime, browser, test, GitHub, deployment, or media tool for a YON action, with explicit authorization, observation, risk, evidence, and blocking rules.
+description: Select and coordinate the smallest sufficient development, runtime, browser, test, GitHub, deployment, or media tool for a YON action, using the detected environment profile, explicit authorization, observation, risk, evidence, and blocking rules.
 disable-model-invocation: true
 ---
 
@@ -10,19 +10,33 @@ Use this skill when YON needs to move from a product decision or execution-plan 
 
 ## Position
 
-`BLUEPRINT → EXECUTION PLAN → ORCHESTRATE → EXECUTE → OBSERVE → DECIDE NEXT → VERIFY`
+`BLUEPRINT → EXECUTION PLAN → ENVIRONMENT → ORCHESTRATE → EXECUTE → OBSERVE → DECIDE NEXT → VERIFY`
 
 Orchestration is a control layer, not an architecture generator and not permission to expand scope.
 
 ## Operating loop
 
-`DECIDE → SELECT → AUTHORIZE → EXECUTE → OBSERVE → DECIDE NEXT`
+`DECIDE → DETECT/REFRESH → SELECT → AUTHORIZE → EXECUTE → OBSERVE → DECIDE NEXT`
 
 ### 1. DECIDE
 
 State the smallest outcome the action must produce. Tie it to the approved Blueprint, workflow, or Execution Plan slice when one exists.
 
-### 2. SELECT
+### 2. DETECT / REFRESH
+
+If the environment profile is missing, stale, incomplete for the intended action, or tool availability is unknown, use `yon-environment` before selecting the concrete tool.
+
+Use the profile to distinguish:
+
+- project/stack signals
+- actual tool availability
+- authorization
+- verification capability
+- unresolved blockers
+
+Never infer `AVAILABLE` from documentation or configuration alone.
+
+### 3. SELECT
 
 Choose the smallest available tool class that can produce sufficient evidence:
 
@@ -38,7 +52,7 @@ Choose the smallest available tool class that can produce sufficient evidence:
 
 Do not use a larger or riskier tool merely because it is available.
 
-### 3. AUTHORIZE
+### 4. AUTHORIZE
 
 Classify the action:
 
@@ -48,11 +62,11 @@ Classify the action:
 
 For HIGH actions, require explicit authorization and proportional verification. If authorization or verification is missing, stop as `BLOCKED`.
 
-### 4. EXECUTE
+### 5. EXECUTE
 
 Use the minimum input and minimum scope required. Respect repository-local instructions and project boundaries. Never fabricate tool availability, command output, screenshots, test results, deployments, or successful changes.
 
-### 5. OBSERVE
+### 6. OBSERVE
 
 After every meaningful mutation, inspect its real result. Observation may include:
 
@@ -67,7 +81,7 @@ After every meaningful mutation, inspect its real result. Observation may includ
 
 Convert observations into evidence before deciding the next action.
 
-### 6. DECIDE NEXT
+### 7. DECIDE NEXT
 
 Continue only when the observed result justifies another action. If a failure can be corrected safely, return to `EXECUTE`. If a critical condition is missing, enter `BLOCKED`.
 
