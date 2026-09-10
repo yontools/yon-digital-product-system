@@ -1,10 +1,10 @@
 # YON Product Blueprint
 
-> Decision contract between product understanding and implementation. Not an automatic architecture, database schema, or framework prescription.
+> Decision contract between product understanding and implementation. Not an automatic architecture, database schema, framework prescription, or permission to redesign working behavior.
 
 ## 0. Traceability
 
-`BUSINESS OUTCOME → WORKFLOW → ARCHETYPE → PRODUCT PRIMITIVES → CAPABILITY / PATTERN → DECISION → VERIFICATION`
+`BUSINESS OUTCOME → WORKFLOW → ARCHETYPE → PRODUCT PRIMITIVES → CAPABILITY / PATTERN → DECISION → EXECUTION → VERIFICATION`
 
 Use the chain where it materially clarifies a decision. Do not invent missing links; record gaps or uncertainty instead.
 
@@ -193,9 +193,19 @@ Results: `PASS`, `FAIL`, `BLOCKED`, `NOT_APPLICABLE`.
 
 Order by user value, workflow dependency, risk, and ability to verify—not by feature count.
 
-1. 
-2. 
-3. 
+| Step | Objective | Blueprint trace | Dependencies | Risk | Expected evidence | State |
+|---|---|---|---|---|---|---|
+| 1 | | | | | | PLANNED |
+| 2 | | | | | | PLANNED |
+| 3 | | | | | | PLANNED |
+
+Execution states:
+
+`PLANNED → IN_PROGRESS → INSPECTING → CORRECTING → VERIFIED`
+
+When execution cannot proceed:
+
+`IN_PROGRESS → BLOCKED`
 
 ### Dependencies / sequencing constraints
 
@@ -211,7 +221,19 @@ Order by user value, workflow dependency, risk, and ability to verify—not by f
 |---|---|---|---|---|
 | | | | | |
 
-## 14. Privacy check
+## 14. Execution handoff
+
+> This section is the controlled handoff from Blueprint to `yon-execute`.
+
+- Approved for execution: `YES / NO / PARTIAL`
+- Execution scope:
+- First executable slice:
+- Required access / infrastructure:
+- High-risk boundaries requiring explicit verification:
+- Stop conditions:
+- Definition of success for this execution:
+
+## 15. Privacy check
 
 - [ ] No private source code
 - [ ] No secrets or credentials
@@ -221,7 +243,7 @@ Order by user value, workflow dependency, risk, and ability to verify—not by f
 - [ ] No identifying business rules
 - [ ] Reusable knowledge is generalized and public-safe
 
-## 15. Evidence after implementation
+## 16. Evidence after implementation
 
 - Observation:
 - Intervention:
@@ -232,4 +254,4 @@ Order by user value, workflow dependency, risk, and ability to verify—not by f
 
 ## Completion rule
 
-The Blueprint is ready when the primary outcome and critical workflow are sufficiently understood to guide implementation without guessing; participants and relationships are explicit; applicable archetype context is justified; product primitives are no more detailed than necessary; capabilities and patterns are classified and traceable; composition boundaries and product-specific behavior are separated; gaps and uncertainty are honest; high-risk areas have proportional verification gates; and implementation order is clear.
+The Blueprint is ready when the primary outcome and critical workflow are sufficiently understood to guide implementation without guessing; participants and relationships are explicit; applicable archetype context is justified; product primitives are no more detailed than necessary; capabilities and patterns are classified and traceable; composition boundaries and product-specific behavior are separated; gaps and uncertainty are honest; high-risk areas have proportional verification gates; implementation order is clear; and the execution handoff does not contain unresolved critical decisions.
