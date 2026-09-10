@@ -44,10 +44,17 @@ def check_required_files() -> None:
         "CONTRIBUTING.md",
         "INSTALL-CLAUDE-CODE.md",
         "skills/yon/SKILL.md",
+        "skills/yon-orchestrate/SKILL.md",
+        "commands/yon-orchestrate.md",
+        "adapters/claude-code/CLAUDE.md",
         "capabilities/INDEX.md",
         "patterns/INDEX.md",
         "evidence/INDEX.md",
         "validation/INDEX.md",
+        "orchestration/README.md",
+        "orchestration/TOOL-CAPABILITY-REGISTRY.md",
+        "orchestration/TOOL-CAPABILITY-MATRIX.md",
+        "orchestration/TOOL-ADAPTER-TEMPLATE.md",
         "scripts/validate_yon.py",
         ".github/workflows/validate.yml",
     ]
@@ -96,11 +103,30 @@ def check_knowledge_directories() -> None:
             fail(f"missing knowledge README: {directory}/README.md")
 
 
+def check_orchestration_contract() -> None:
+    required_terms = {
+        "orchestration/README.md": ("SELECT TOOL", "AUTHORIZE", "OBSERVE", "BLOCKED"),
+        "orchestration/TOOL-CAPABILITY-REGISTRY.md": ("DOCUMENTED ≠ AVAILABLE", "availability_status", "risk"),
+        "orchestration/TOOL-CAPABILITY-MATRIX.md": ("Minimum evidence", "Fallback policy", "No-tool rule"),
+        "orchestration/TOOL-ADAPTER-TEMPLATE.md": ("Inputs", "Outputs", "Risk", "Privacy"),
+        "skills/yon-orchestrate/SKILL.md": ("DECIDE", "SELECT", "AUTHORIZE", "EXECUTE", "OBSERVE", "DECIDE NEXT"),
+    }
+    for rel, terms in required_terms.items():
+        path = ROOT / rel
+        if not path.is_file():
+            continue
+        text = read_text(path)
+        for term in terms:
+            if term not in text:
+                fail(f"orchestration contract missing '{term}' in {rel}")
+
+
 def main() -> int:
     check_required_files()
     check_plugin()
     check_skills()
     check_knowledge_directories()
+    check_orchestration_contract()
 
     if ERRORS:
         print(f"YON validation FAILED: {len(ERRORS)} issue(s)")
