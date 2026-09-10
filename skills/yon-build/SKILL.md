@@ -1,16 +1,16 @@
 ---
 name: yon-build
-description: Build a new SaaS, website, landing page, dashboard, or digital product with YON from requirements through blueprint, controlled execution, runtime inspection, and verification.
+description: Build a new SaaS, website, landing page, dashboard, or digital product with YON from requirements through Blueprint, execution planning, implementation, and verification.
 disable-model-invocation: true
 ---
 
 # YON Build
 
-YON Build turns an understood product request into a verified implementation. For broad or multi-workflow products, a Product Blueprint is the contract between product understanding and implementation, and `yon-execute` is the controlled bridge from decisions to implementation.
+YON Build turns an understood product request into a verified implementation. For broad or multi-workflow products, a Product Blueprint is the contract between product understanding and implementation, and an Execution Plan is the operational handoff into implementation.
 
 ## Build sequence
 
-`UNDERSTAND → BUSINESS DISCOVERY → PRODUCT MODEL → DISCOVER → RESOLVE → BLUEPRINT → EXECUTE → VERIFY`
+`UNDERSTAND → BUSINESS DISCOVERY → PRODUCT MODEL → DISCOVER → RESOLVE → BLUEPRINT → EXECUTION PLAN → EXECUTE → VERIFY`
 
 ### 1. Understand
 
@@ -38,17 +38,25 @@ For broad products, create or update a Product Blueprint using `blueprints/BLUEP
 
 A Blueprint is a decision contract, not an automatic architecture or database schema. It must not override project-local constraints or justify unnecessary changes to working behavior.
 
-### 7. Execute
+### 7. Execution Plan
 
-For an approved Blueprint, use `yon-execute` to convert decisions into dependency-aware work slices. Implement the smallest useful slice, run the real product, inspect the result, correct failures, and verify the slice before progressing when practical.
+When the Blueprint contains multiple meaningful implementation steps, create an Execution Plan using `yon-execution-plan` and `execution/EXECUTION-PLAN-TEMPLATE.md`.
+
+The plan converts approved decisions into dependency-aware vertical slices with observable acceptance criteria, risk classification, verification checkpoints, regression surfaces, explicit exclusions, and stop conditions.
+
+Do not use technical file lists as a substitute for a user-value execution plan. Every meaningful slice must trace back to an outcome, workflow, and Blueprint decision.
+
+### 8. Execute
+
+Use `yon-execute` to run the ready slices. Implement the smallest useful slice, run the real product, inspect the result, correct failures, and verify the slice before progressing when practical.
 
 Do not silently invent unresolved product decisions. Pause at missing authorization/access, unresolved critical product behavior, or unverifiable high-risk boundaries and report the block.
 
-### 8. Run / Inspect / Correct
+### 9. Run / Inspect / Correct
 
 Run the real product as early as practical. Exercise critical workflows, inspect browser/runtime behavior, console/network failures, responsive states, accessibility behavior, and relevant data/security boundaries. Correct the smallest responsible cause and re-run the affected journey.
 
-### 9. Verify
+### 10. Verify
 
 Use `validation/INDEX.md` to select proportional gates. Verify the original user outcome end-to-end. Record meaningful findings as evidence when they can support future reusable knowledge.
 
@@ -58,4 +66,4 @@ Authentication, authorization, billing, destructive operations, migrations, secu
 
 ## Completion
 
-A build is complete only when the affected user journey works in the running product, important states are handled, responsive/accessibility concerns have been considered, relevant runtime/security boundaries are verified, no hidden high-risk failure remains, and the implementation remains consistent with the approved product intent.
+A build is complete only when the affected user journey works in the running product, all required execution-plan slices are verified or explicitly blocked, important states are handled, responsive/accessibility concerns have been considered, relevant runtime/security boundaries are verified, no hidden high-risk failure remains, and the implementation remains consistent with the approved product intent.
