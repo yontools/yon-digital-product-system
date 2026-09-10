@@ -1,11 +1,11 @@
 ---
 name: yon
-description: YON Digital Product System master skill. Use when designing, building, auditing, polishing, or verifying a website, landing page, SaaS, dashboard, or digital product. Apply YON's product-engineering loop, inspect the real project before changing it, discover and resolve reusable capabilities and patterns before implementation, and verify the running result.
+description: YON Digital Product System master skill. Use when designing, building, auditing, polishing, or verifying a website, landing page, SaaS, dashboard, or digital product. Apply YON's product-engineering loop, inspect the real project before changing it, discover and resolve reusable capabilities and patterns before implementation, execute approved product decisions in controlled slices, and verify the running result.
 ---
 
 # YON — Master Skill
 
-YON is a decision system for AI-assisted product development. It is not a visual component library and not a prompt collection.
+YON is a decision and execution system for AI-assisted product development. It is not a visual component library and not a prompt collection.
 
 ## Mission
 
@@ -16,6 +16,10 @@ Build products that are useful, understandable, efficient, resilient, accessible
 Always reason through:
 
 `OBSERVE → UNDERSTAND → DETECT → PROPOSE → IMPLEMENT → RUN → INSPECT → CORRECT → VERIFY`
+
+For broad products, the decision path is:
+
+`BUSINESS DISCOVERY → PRODUCT MODEL → CAPABILITY DISCOVERY → RESOLUTION → BLUEPRINT → EXECUTION → VERIFICATION`
 
 ### OBSERVE
 
@@ -57,13 +61,16 @@ Before implementation, discover and resolve reusable knowledge:
 5. Use `yon-capability-resolver` to choose the smallest justified composition when reusable behaviors are involved.
 6. Check `patterns/INDEX.md` for recurring UX/UI solutions.
 7. Check `evidence/INDEX.md` when a decision depends on observations, experiments, runtime verification, regression results, or production outcomes.
-8. Classify candidates as `DIRECT`, `SUPPORTING`, `OPTIONAL`, `MISSING`, or `PRODUCT-SPECIFIC`.
-9. Prefer proven knowledge; validate experimental knowledge before treating it as established.
-10. If no reusable solution fits, record the gap instead of forcing a match.
+8. For broad or workflow-heavy products, create or refine a Product Blueprint before implementation.
+9. Classify candidates as `DIRECT`, `SUPPORTING`, `OPTIONAL`, `MISSING`, or `PRODUCT-SPECIFIC`.
+10. Prefer proven knowledge; validate experimental knowledge before treating it as established.
+11. If no reusable solution fits, record the gap instead of forcing a match.
 
-### IMPLEMENT
+### IMPLEMENT / EXECUTE
 
-Make the smallest coherent change that solves the problem. Reuse existing architecture and components where appropriate.
+For an approved Blueprint, use `yon-execute` when controlled execution is useful. Convert decisions into the smallest dependency-aware work slices, implement observable value, run the real product, inspect it, correct failures, and verify each meaningful slice.
+
+Do not treat a Blueprint as permission to invent missing product decisions. When execution reaches an unresolved critical decision, missing authorization/access, or unverifiable high-risk boundary, stop at that boundary and report it honestly.
 
 ### RUN / INSPECT / CORRECT / VERIFY
 
@@ -103,7 +110,7 @@ Project-local `CLAUDE.md` and repository instructions remain authoritative for p
 
 ## High-risk changes
 
-Treat authentication, authorization, billing, destructive operations, database migrations, security controls, external integrations, and core business rules as high-risk. Understand existing behavior first and verify more strongly.
+Treat authentication, authorization, billing, destructive operations, database migrations, security controls, external integrations, tenancy/isolation, and core business rules as high-risk. Understand existing behavior first and verify more strongly.
 
 ## Definition of done
 
@@ -118,6 +125,8 @@ Do not declare a task complete merely because code compiles. Confirm the affecte
 - Universal Product Model: `model/UNIVERSAL-PRODUCT-MODEL.md`
 - Product Model template: `model/PRODUCT-MODEL-TEMPLATE.md`
 - Product model skill: `skills/yon-product-model/SKILL.md`
+- Product Blueprint: `skills/yon-blueprint/SKILL.md`
+- Execution Engine: `skills/yon-execute/SKILL.md`
 - Product design: `skills/product-design/SKILL.md`
 - UX: `skills/ux/SKILL.md`
 - UI: `skills/ui/SKILL.md`
