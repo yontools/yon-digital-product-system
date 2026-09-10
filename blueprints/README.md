@@ -33,7 +33,7 @@ The chain is a reasoning aid, not a requirement to populate every field. If evid
 
 ## Lifecycle
 
-`REQUEST → BUSINESS DISCOVERY → PRODUCT MODEL → DISCOVERY → RESOLUTION → BLUEPRINT → IMPLEMENTATION → VERIFICATION`
+`REQUEST → BUSINESS DISCOVERY → PRODUCT MODEL → DISCOVERY → RESOLUTION → BLUEPRINT → EXECUTION → VERIFICATION`
 
 For products without a meaningful business-operation context, Business Discovery may be skipped. For narrow/simple work, a full Blueprint may also be unnecessary.
 
@@ -53,6 +53,18 @@ After implementation, meaningful findings can flow into evidence and deliberate 
 10. High-risk decisions require stronger verification.
 11. Existing working behavior should not be redesigned unnecessarily.
 12. Never include private source code, secrets, customer data, proprietary prompts, confidential architecture, or identifying business rules in reusable/public Blueprint knowledge.
+
+## Execution
+
+An approved Blueprint can be passed to `yon-execute`.
+
+Execution follows:
+
+`PLAN → IMPLEMENT → RUN → INSPECT → CORRECT → VERIFY`
+
+Use vertical slices where possible. Each slice should have an expected behavior and verification evidence. Execution may stop as `BLOCKED` when a critical product decision, authorization/access condition, infrastructure dependency, or high-risk verification requirement is unresolved.
+
+The Blueprint does not grant permission to invent missing decisions or expand scope.
 
 ## Output
 
