@@ -1,12 +1,12 @@
 # YON Digital Product System
 
-Sistema abierto de metodología, skills, patrones, capacidades, evidencia y agentes para diseñar, construir, mejorar y verificar productos digitales.
+Sistema abierto de metodología, skills, patrones, capacidades, evidencia, agentes y ejecución para diseñar, construir, mejorar y verificar productos digitales.
 
 ## Qué es YON
 
 YON es un sistema operativo de product-engineering para trabajar con IA sobre productos reales. No es solamente una colección de prompts ni un UI kit.
 
-Su objetivo es que una IA pueda entender el producto antes de modificarlo, detectar oportunidades de mejora, reutilizar soluciones probadas, implementar de forma segura y verificar el resultado real.
+Su objetivo es que una IA pueda entender el producto antes de modificarlo, detectar oportunidades de mejora, reutilizar soluciones probadas, convertir decisiones en un plan controlado, implementar, inspeccionar el producto real, corregir y verificar el resultado.
 
 ## Flujo central
 
@@ -42,6 +42,7 @@ Para ver la guía completa: `INSTALL-CLAUDE-CODE.md`.
 - `yon-audit` — auditoría sin modificar
 - `yon-polish` — mejora segura de producto existente
 - `yon-build` — construcción de un producto nuevo
+- `yon-execute` — ejecución controlada de un Blueprint mediante slices, runtime inspection, corrección y verificación
 - `yon-saas` — diseño y construcción de SaaS
 - `yon-web` — sitios web
 - `yon-landing` — landing pages
@@ -84,19 +85,13 @@ Su propósito es que YON pueda reconocer estructuras comunes entre productos de 
 
 El modelo **no es** un esquema de base de datos, ORM, framework, arquitectura automática ni API universal. No todos los productos necesitan todas las primitivas y una primitiva conceptual no implica que deba existir una capability reutilizable.
 
-El flujo ampliado para productos suficientemente amplios es:
-
-`PRODUCT → UNIVERSAL MODEL → DISCOVERY → RESOLUTION → BLUEPRINT → IMPLEMENTATION → VERIFICATION`
-
-Referencia: `model/UNIVERSAL-PRODUCT-MODEL.md`.
-
 ## Descubrimiento, composición y Blueprint
 
 YON separa **descubrir**, **resolver** y **definir el contrato de construcción**.
 
 El flujo para productos amplios es:
 
-`PROBLEMA → BUSINESS DISCOVERY → UNIVERSAL MODEL → DISCOVERY → RESOLUTION → BLUEPRINT → IMPLEMENTACIÓN → VERIFICACIÓN`
+`PROBLEMA → BUSINESS DISCOVERY → UNIVERSAL MODEL → DISCOVERY → RESOLUTION → BLUEPRINT → EXECUTION → VERIFICACIÓN`
 
 `yon-business-discovery` entiende el modelo operativo del negocio y evita inferir requisitos desde la etiqueta del rubro.
 
@@ -106,9 +101,29 @@ El flujo para productos amplios es:
 
 `yon-blueprint` convierte el entendimiento y la resolución en un **Product Blueprint**: participantes, relaciones, jobs, workflows, entidades, lifecycle, capacidades, patrones, gaps, comportamiento específico, riesgos y gates de verificación.
 
-El Blueprint es un contrato de decisión, no una arquitectura automática ni un esquema de base de datos. No autoriza a cambiar innecesariamente un producto que ya funciona.
+`yon-execute` convierte ese contrato en trabajo ejecutable: planifica slices, implementa, ejecuta el producto real, inspecciona, corrige y vuelve a verificar. Si una decisión crítica no está resuelta o una verificación de alto riesgo no puede realizarse, bloquea en lugar de inventar o declarar éxito.
+
+El Blueprint y la Execution Engine son contratos de decisión/orquestación, no una arquitectura automática ni un esquema de base de datos. No autorizan a cambiar innecesariamente un producto que ya funciona.
 
 Los Blueprints reutilizan `blueprints/BLUEPRINT-TEMPLATE.md` y nunca deben contener secretos, datos privados, código propietario ni reglas de negocio identificables.
+
+## Ejecución controlada
+
+El Execution Engine usa el ciclo:
+
+`PLAN → IMPLEMENT → RUN → INSPECT → CORRECT → VERIFY`
+
+Los work items siguen:
+
+`PLANNED → IN_PROGRESS → INSPECTING → CORRECTING → VERIFIED`
+
+o, cuando corresponde:
+
+`IN_PROGRESS → BLOCKED`
+
+`BLOCKED` nunca equivale a `VERIFIED` ni a `PASS`.
+
+La ejecución prioriza slices verticales, valor observable, dependencias, riesgo y verificabilidad. No convierte cada mejora detectada en alcance obligatorio.
 
 ## Agentes
 
@@ -191,6 +206,7 @@ skills/
 ├── yon-audit/
 ├── yon-polish/
 ├── yon-build/
+├── yon-execute/
 ├── yon-saas/
 ├── yon-web/
 ├── yon-landing/
