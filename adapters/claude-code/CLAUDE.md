@@ -15,8 +15,9 @@ Before changing a project:
 3. Read the relevant command under `commands/`.
 4. Inspect the target project's own instructions (`CLAUDE.md`, `AGENTS.md`, README, package scripts, and relevant docs).
 5. If the project or required tooling is unfamiliar, run the YON Environment Detection flow and build/refresh an Environment Profile.
-6. Inspect the existing implementation before proposing changes.
-7. When execution requires real tool actions, load `skills/yon-orchestrate/SKILL.md` and follow its tool-selection and authorization rules.
+6. If real tool execution is required, resolve the project-local Tool Registry with `yon-tool-registry` before selecting concrete adapters.
+7. Inspect the existing implementation before proposing changes.
+8. Load `skills/yon-orchestrate/SKILL.md` for tool-mediated execution.
 
 Do not assume a project uses a particular framework, database, or deployment provider until the repository confirms it.
 
@@ -26,6 +27,7 @@ Do not assume a project uses a particular framework, database, or deployment pro
 - Polish an existing product → `commands/yon-polish.md`
 - Build a new product → `commands/yon-build.md`
 - Detect/refresh environment → `commands/yon-environment.md`
+- Resolve project Tool Registry → `commands/yon-tool-registry.md`
 - Execute an approved plan → `commands/yon-execute.md`
 - Create an execution plan → `commands/yon-execution-plan.md`
 - Orchestrate a real tool action → `commands/yon-orchestrate.md`
@@ -41,37 +43,43 @@ Do not assume a project uses a particular framework, database, or deployment pro
 
 `OBSERVE → UNDERSTAND → DETECT → PROPOSE → IMPLEMENT → RUN → INSPECT → CORRECT → VERIFY`
 
-For environment-aware execution, detection adds:
+For environment-aware execution:
 
-`DETECT PROJECT → DETECT STACK → DETECT TOOLS → DETECT AUTHORITY → BUILD PROFILE`
+`DETECT PROJECT → DETECT STACK → DETECT TOOLS → DETECT AUTHORITY → BUILD PROFILE → RESOLVE TOOL REGISTRY`
 
-For tool-mediated execution, YON adds:
+For tool-mediated execution:
 
 `DECIDE → SELECT TOOL → AUTHORIZE → EXECUTE → OBSERVE → DECIDE NEXT`
 
 Do not stop after writing code when the environment allows execution and verification. Do not claim a tool action occurred without actual evidence.
 
-## Environment profile
+## Environment + Tool Registry
 
-Use `yon-environment` when tool availability or project context is unknown, incomplete or stale.
+Use the Environment Profile as evidence, then resolve it into a project-local Tool Registry.
 
-The profile must distinguish:
+The registry must distinguish:
 
-- repository/project signals
-- actual executable availability
-- authorization for the requested action
-- verification capability
-- blockers and unknowns
+- `AVAILABLE`
+- `UNAVAILABLE`
+- `UNAUTHORIZED`
+- `DEGRADED`
+- `UNKNOWN`
+
+Use evidence precedence:
+
+`ACTUAL > AUTHORIZED > CONFIGURED > SIGNALLED > ASSUMED`
 
 `DOCUMENTED ≠ AVAILABLE`.
 
-Repository configuration can establish a signal, but only a safe observable check can establish actual tool availability. Tool availability never implies authorization.
+A package, configuration entry, script, or documentation reference may signal a capability but cannot prove that the concrete adapter is usable. Presence never implies authorization.
 
-Never expose secret values while detecting the environment. Do not install, deploy, migrate, delete or mutate production merely to prove that a capability exists.
+Before high-risk or externally mutating actions, refresh the relevant adapter state close to execution time.
+
+Never expose secret values while detecting or resolving the environment. Do not install, deploy, migrate, delete or mutate production merely to prove that a capability exists.
 
 ## Tool selection
 
-Use the smallest available tool that can establish the required evidence:
+Use the smallest available adapter that can establish the required evidence:
 
 - repository/filesystem for static inspection and edits
 - terminal/runtime for scripts, builds, servers and commands
@@ -81,7 +89,7 @@ Use the smallest available tool that can establish the required evidence:
 - deployment/infrastructure for hosted state or deployment operations
 - visual/media for meaningful product assets
 
-Do not invoke a larger or riskier tool merely because it is available.
+If the required capability is `UNKNOWN`, probe safely or remain `BLOCKED`. If an equivalent lower-risk adapter produces sufficient evidence, prefer it.
 
 ## Authorization and risk
 
