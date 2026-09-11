@@ -10,7 +10,7 @@ YON Build turns an understood product request into a verified implementation. Fo
 
 ## Build sequence
 
-`UNDERSTAND → BUSINESS DISCOVERY → PRODUCT MODEL → GRAPH/EVENT/AGENT CONTEXT → DISCOVER → RESOLVE → BLUEPRINT → EXECUTION PLAN → ENVIRONMENT → EXECUTE → VERIFY`
+`UNDERSTAND → BUSINESS DISCOVERY → PRODUCT MODEL → GRAPH/EVENT/POLICY/AGENT CONTEXT → DISCOVER → RESOLVE → BLUEPRINT → EXECUTION PLAN → ENVIRONMENT → EXECUTE → VERIFY`
 
 ### 1. Understand
 
@@ -24,12 +24,13 @@ When the request describes a real-world business operation, use `yon-business-di
 
 For broad products, use the Universal Product Model when it materially clarifies participants, relationships, resources, actions, events, states, temporal rules, workflows, transactions, communications, documents, or boundaries. Do not over-model.
 
-### 4. Graph / Event / Agent Context
+### 4. Graph / Event / Policy / Agent Context
 
-For products with significant relationship-driven coordination, event reactions, or AI-operated workflows, use the relevant YON layers:
+For products with significant relationship-driven coordination, event reactions, explicit decision boundaries, or AI-operated workflows, use the relevant YON layers:
 
 - **Business Graph** for relationship and context reasoning;
 - **Event Engine** for meaningful occurrences and reactions;
+- **Policy** for explicit decision, approval, denial, and boundary conditions;
 - **Agent System** for bounded AI decision and action behavior.
 
 Use only the layers justified by the product. They are conceptual and do not prescribe infrastructure.
@@ -44,7 +45,7 @@ Use `yon-capability-resolver` to select the minimum justified capability composi
 
 ### 7. Blueprint
 
-For broad products, create or update a Product Blueprint using `blueprints/BLUEPRINT-TEMPLATE.md`. The Blueprint should make participants, relationships, workflows, entities, lifecycle, capability composition, patterns, gaps, product-specific behavior, risks, implementation order, and verification gates explicit. When relevant, include graph context, event reactions, agent boundaries, and approval rules.
+For broad products, create or update a Product Blueprint using `blueprints/BLUEPRINT-TEMPLATE.md`. The Blueprint should make participants, relationships, workflows, entities, lifecycle, capability composition, patterns, gaps, product-specific behavior, risks, implementation order, and verification gates explicit. When relevant, include graph context, event reactions, policy/approval boundaries, agent boundaries, and autonomy rules.
 
 A Blueprint is a decision contract, not an automatic architecture or database schema. It must not override project-local constraints or justify unnecessary changes to working behavior.
 
@@ -70,7 +71,7 @@ Do not silently invent unresolved product decisions. Pause at missing authorizat
 
 ### 11. Run / Inspect / Correct
 
-Run the real product as early as practical. Exercise critical workflows, inspect browser/runtime behavior, console/network failures, responsive states, accessibility behavior, and relevant data/security boundaries. For event or agent behavior, inspect triggers, side effects, permissions, duplicate handling, approval gates, and stop conditions.
+Run the real product as early as practical. Exercise critical workflows, inspect browser/runtime behavior, console/network failures, responsive states, accessibility behavior, and relevant data/security boundaries. For event, policy, or agent behavior, inspect triggers, decisions, side effects, permissions, duplicate handling, approval gates, uncertainty handling, and stop conditions.
 
 Correct the smallest responsible cause and re-run the affected journey.
 
@@ -80,8 +81,8 @@ Use `validation/INDEX.md` to select proportional gates. Verify the original user
 
 ## High-risk changes
 
-Authentication, authorization, billing, destructive operations, migrations, security controls, external integrations, tenancy/isolation, agent actions with consequential side effects, and core business rules require stronger understanding and verification. Execution may be blocked when required evidence or authorization is unavailable.
+Authentication, authorization, billing, destructive operations, migrations, security controls, external integrations, tenancy/isolation, agent actions with consequential side effects, policy changes affecting access or money, and core business rules require stronger understanding and verification. Execution may be blocked when required evidence or authorization is unavailable.
 
 ## Completion
 
-A build is complete only when the affected user journey works in the running product, all required execution-plan slices are verified or explicitly blocked, important states are handled, responsive/accessibility concerns have been considered, relevant runtime/security boundaries are verified, agent/event behavior is bounded where applicable, no hidden high-risk failure remains, and the implementation remains consistent with the approved product intent.
+A build is complete only when the affected user journey works in the running product, all required execution-plan slices are verified or explicitly blocked, important states are handled, responsive/accessibility concerns have been considered, relevant runtime/security boundaries are verified, policy decisions are explicit where applicable, agent/event behavior is bounded where applicable, no hidden high-risk failure remains, and the implementation remains consistent with the approved product intent.
