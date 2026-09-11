@@ -6,6 +6,8 @@ YON agents are software participants that can observe context, reason about goal
 
 Agent autonomy is a **control model**, not a model-quality rating. A more capable model does not automatically receive more authority.
 
+`MODEL CAPABILITY ≠ TOOL ACCESS ≠ AUTHORIZATION ≠ AUTONOMY`
+
 ## 2. Agent profile
 
 A meaningful agent definition should establish:
