@@ -41,8 +41,9 @@ def check_required_files() -> None:
         ".claude-plugin/plugin.json", "YON.md", "README.md", "CONTRIBUTING.md",
         "INSTALL-CLAUDE-CODE.md", "skills/yon/SKILL.md",
         "skills/yon-environment/SKILL.md", "skills/yon-tool-registry/SKILL.md",
-        "skills/yon-orchestrate/SKILL.md", "commands/yon-environment.md",
-        "commands/yon-tool-registry.md", "commands/yon-orchestrate.md",
+        "skills/yon-orchestrate/SKILL.md", "skills/yon-agent-system/SKILL.md",
+        "commands/yon-environment.md", "commands/yon-tool-registry.md",
+        "commands/yon-orchestrate.md", "commands/yon-agent-system.md",
         "adapters/claude-code/CLAUDE.md", "capabilities/INDEX.md", "patterns/INDEX.md",
         "evidence/INDEX.md", "validation/INDEX.md", "environment/README.md",
         "environment/DETECTION-RULES.md", "environment/ENVIRONMENT-PROFILE-TEMPLATE.md",
@@ -50,6 +51,9 @@ def check_required_files() -> None:
         "orchestration/TOOL-CAPABILITY-REGISTRY.md", "orchestration/TOOL-CAPABILITY-MATRIX.md",
         "orchestration/TOOL-ADAPTER-TEMPLATE.md", "scripts/detect_environment.py",
         "scripts/validate_yon.py", ".github/workflows/validate.yml",
+        "model/BUSINESS-GRAPH.md", "model/UNIVERSAL-PRODUCT-MODEL.md",
+        "events/README.md", "events/EVENT-CONTRACT-TEMPLATE.md",
+        "agents/AGENT-AUTONOMY.md", "agents/AGENT-PROFILE-TEMPLATE.md",
     ]
     for rel in required:
         if not (ROOT / rel).is_file():
@@ -136,6 +140,27 @@ def check_orchestration_contract() -> None:
                 fail(f"orchestration contract missing '{term}' in {rel}")
 
 
+def check_graph_event_agent_contract() -> None:
+    required_terms = {
+        "model/BUSINESS-GRAPH.md": ("Business Graph", "Relationship types", "Provenance", "Temporal graph", "Implementation neutrality", "Privacy"),
+        "events/README.md": ("Event Engine", "Commands versus events", "idempotent", "retry", "Privacy"),
+        "events/EVENT-CONTRACT-TEMPLATE.md": ("Event identity", "Correlation ID", "Causation ID", "Idempotency identity", "Final result"),
+        "agents/AGENT-AUTONOMY.md": ("Level 1", "Level 2", "Level 3", "Level 4", "MODEL CAPABILITY ≠ TOOL ACCESS", "Stop conditions", "Privacy"),
+        "agents/AGENT-PROFILE-TEMPLATE.md": ("Autonomy", "Approval thresholds", "Stop conditions", "Verification"),
+        "skills/yon-agent-system/SKILL.md": ("BUSINESS GRAPH", "EVENT ENGINE", "MODEL CAPABILITY ≠ TOOL ACCESS", "BLOCKED", "verification"),
+        "commands/yon-agent-system.md": ("autonomy", "approval", "BLOCKED", "verification"),
+        "capabilities/INDEX.md": ("Business Graph", "Event-driven Coordination", "Agentic Operations", "Graph, events, and agents"),
+    }
+    for rel, terms in required_terms.items():
+        path = ROOT / rel
+        if not path.is_file():
+            continue
+        text = read_text(path)
+        for term in terms:
+            if term not in text:
+                fail(f"graph/event/agent contract missing '{term}' in {rel}")
+
+
 def main() -> int:
     check_required_files()
     check_plugin()
@@ -143,6 +168,7 @@ def main() -> int:
     check_knowledge_directories()
     check_environment_contract()
     check_orchestration_contract()
+    check_graph_event_agent_contract()
     if ERRORS:
         print(f"YON validation FAILED: {len(ERRORS)} issue(s)")
         for error in ERRORS:
