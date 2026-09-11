@@ -2,7 +2,7 @@
 
 La capa de **Environment Detection** permite que YON entienda el entorno real antes de seleccionar herramientas o ejecutar cambios.
 
-No intenta adivinar. Construye un perfil observable del proyecto y distingue entre señales del repositorio y disponibilidad real de herramientas.
+No intenta adivinar. Construye un **Environment Profile** observable del proyecto y distingue entre señales del repositorio y disponibilidad real de herramientas.
 
 ## Flujo
 
