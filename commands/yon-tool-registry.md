@@ -11,7 +11,7 @@ Resolve the current project-local Tool Registry from the Environment Profile bef
 5. Distinguish availability from authorization.
 6. Map concrete adapters to abstract capability classes.
 7. Record evidence, confidence, risk, side effects and freshness.
-8. Mark unresolved capabilities `UNKNOWN`, `UNAVAILABLE`, `UNAUTHORIZED`, or `DEGRADED`; do not promote them to available by assumption.
+8. Mark unresolved capabilities `UNKNOWN`, `UNAVAILABLE`, `UNAUTHORIZED`, or `DEGRADED`; do not promote them to available by assumption. A `BLOCKED` result is returned when a required capability cannot be safely resolved.
 9. Return the registry for `yon-orchestrate`.
 
 ## Output
