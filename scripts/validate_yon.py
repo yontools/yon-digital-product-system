@@ -42,8 +42,9 @@ def check_required_files() -> None:
         "INSTALL-CLAUDE-CODE.md", "skills/yon/SKILL.md",
         "skills/yon-environment/SKILL.md", "skills/yon-tool-registry/SKILL.md",
         "skills/yon-orchestrate/SKILL.md", "skills/yon-agent-system/SKILL.md",
-        "commands/yon-environment.md", "commands/yon-tool-registry.md",
-        "commands/yon-orchestrate.md", "commands/yon-agent-system.md",
+        "skills/yon-policy/SKILL.md", "commands/yon-environment.md",
+        "commands/yon-tool-registry.md", "commands/yon-orchestrate.md",
+        "commands/yon-agent-system.md", "commands/yon-policy.md",
         "adapters/claude-code/CLAUDE.md", "capabilities/INDEX.md", "patterns/INDEX.md",
         "evidence/INDEX.md", "validation/INDEX.md", "environment/README.md",
         "environment/DETECTION-RULES.md", "environment/ENVIRONMENT-PROFILE-TEMPLATE.md",
@@ -54,6 +55,7 @@ def check_required_files() -> None:
         "model/BUSINESS-GRAPH.md", "model/UNIVERSAL-PRODUCT-MODEL.md",
         "events/README.md", "events/EVENT-CONTRACT-TEMPLATE.md",
         "agents/AGENT-AUTONOMY.md", "agents/AGENT-PROFILE-TEMPLATE.md",
+        "policy/README.md", "policy/POLICY-CONTRACT-TEMPLATE.md",
     ]
     for rel in required:
         if not (ROOT / rel).is_file():
@@ -161,6 +163,25 @@ def check_graph_event_agent_contract() -> None:
                 fail(f"graph/event/agent contract missing '{term}' in {rel}")
 
 
+def check_policy_contract() -> None:
+    required_terms = {
+        "policy/README.md": ("Policy & Decision Boundaries", "ALLOW", "DENY", "REQUIRE_APPROVAL", "BLOCKED", "NOT_APPLICABLE", "Privacy"),
+        "policy/POLICY-CONTRACT-TEMPLATE.md": ("Conditions", "Decision", "Approval authority", "Failure behavior", "Verification"),
+        "skills/yon-policy/SKILL.md": ("CONTEXT → POLICY → DECISION", "AUTHENTICATION ≠ ROLE", "BLOCKED", "verification"),
+        "commands/yon-policy.md": ("allow", "approval", "BLOCKED", "verification"),
+        "capabilities/INDEX.md": ("Policy & Decision Boundaries", "Graph, events, agents, and policy"),
+        "YON.md": ("Policy", "POLICY DECISION ≠ EXECUTION"),
+    }
+    for rel, terms in required_terms.items():
+        path = ROOT / rel
+        if not path.is_file():
+            continue
+        text = read_text(path)
+        for term in terms:
+            if term not in text:
+                fail(f"policy contract missing '{term}' in {rel}")
+
+
 def main() -> int:
     check_required_files()
     check_plugin()
@@ -169,6 +190,7 @@ def main() -> int:
     check_environment_contract()
     check_orchestration_contract()
     check_graph_event_agent_contract()
+    check_policy_contract()
     if ERRORS:
         print(f"YON validation FAILED: {len(ERRORS)} issue(s)")
         for error in ERRORS:
