@@ -12,7 +12,7 @@ Use this skill when a product is broad enough that a lightweight conceptual mode
 
 Move from product understanding to a stable conceptual vocabulary without imposing architecture:
 
-`PRODUCT → UNIVERSAL MODEL → DISCOVERY → RESOLUTION → BLUEPRINT`
+`PRODUCT → UNIVERSAL MODEL → BUSINESS GRAPH CONTEXT → DISCOVERY → RESOLUTION → BLUEPRINT`
 
 ## Process
 
@@ -21,11 +21,12 @@ Move from product understanding to a stable conceptual vocabulary without imposi
 3. Separate identity, relationship, role, and authorization.
 4. Identify lifecycle and temporal behavior when they affect outcomes.
 5. Distinguish intentional Actions from recorded Events.
-6. Keep specialized domain semantics product-specific unless evidence supports generalization.
-7. Map relevant primitive combinations to existing YON capabilities and patterns.
-8. Pass genuine gaps to capability discovery; do not invent a capability merely because a primitive has no mapping.
-9. Use the model as input to Product Blueprint when the product is broad enough.
-10. Define verification implications for important states, boundaries, workflows, and temporal rules.
+6. When relationships materially affect routing, responsibility, access, automation, or agent decisions, use the Business Graph as contextual reasoning—not as a database prescription.
+7. Keep specialized domain semantics product-specific unless evidence supports generalization.
+8. Map relevant primitive combinations to existing YON capabilities and patterns.
+9. Pass genuine gaps to capability discovery; do not invent a capability merely because a primitive has no mapping.
+10. Use the model as input to Product Blueprint when the product is broad enough.
+11. Define verification implications for important states, boundaries, workflows, temporal rules, graph relationships, and event reactions.
 
 ## Rules
 
@@ -34,8 +35,20 @@ Move from product understanding to a stable conceptual vocabulary without imposi
 - Do not require every product to use every primitive.
 - Do not create abstractions for nouns alone.
 - Do not introduce graph/database infrastructure merely because relationships exist.
+- Do not create an event system merely because events sound sophisticated.
 - Do not convert every repeated feature into a capability.
 - Preserve working local architecture unless a justified product decision requires change.
+
+## Graph, events, and agents
+
+For AI-native or highly coordinated products, keep these layers distinct:
+
+- Business Graph: relationship and context reasoning.
+- Event Engine: meaningful occurrences and reactions.
+- Agent System: bounded decision and action behavior.
+- Orchestration: actual tool selection, authority, execution, and observation.
+
+An event does not grant permission. A relationship does not automatically grant authorization. An agent autonomy level does not bypass policy.
 
 ## Output
 
@@ -50,10 +63,11 @@ For broad products, produce or update a lightweight Product Model using `model/P
 7. workflows;
 8. transactions, communications, and documents when relevant;
 9. permission/tenancy boundaries;
-10. capability/pattern mapping;
-11. product-specific boundary;
-12. risks and verification implications;
-13. intentionally unmodeled concepts.
+10. graph context when materially useful;
+11. capability/pattern mapping;
+12. product-specific boundary;
+13. risks and verification implications;
+14. intentionally unmodeled concepts.
 
 ## Completion rule
 
