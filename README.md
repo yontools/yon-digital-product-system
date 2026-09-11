@@ -41,9 +41,14 @@ Para la guía completa: `INSTALL-CLAUDE-CODE.md`.
 - `yon-polish` — mejora segura de producto existente
 - `yon-build` — construcción de producto nuevo
 - `yon-environment` — detección del proyecto, stack, herramientas y autoridad
+- `yon-tool-registry` — resolución de herramientas disponibles y autorizadas
 - `yon-execute` — ejecución controlada de un Blueprint mediante slices, runtime inspection, corrección y verificación
 - `yon-execution-plan` — convierte un Blueprint en slices ejecutables, dependencias, criterios de aceptación y checkpoints
 - `yon-orchestrate` — selecciona y coordina la herramienta mínima necesaria con autorización, riesgo y evidencia
+- `yon-business-graph` — contexto de relaciones y conexiones significativas
+- `yon-event-engine` — eventos, reacciones, idempotencia y coordinación
+- `yon-policy` — límites de decisión, aprobación, denegación y bloqueo
+- `yon-agent-system` — agentes con herramientas, contexto y autonomía acotada
 - `yon-saas` — diseño y construcción de SaaS
 - `yon-web` — sitios web
 - `yon-landing` — landing pages
@@ -78,13 +83,44 @@ El **Universal Product Model** es una capa conceptual posterior al entendimiento
 
 No es un esquema de base de datos, ORM, framework, arquitectura automática ni API universal.
 
+## Contexto relacional, eventos, políticas y agentes
+
+Para productos amplios o AI-native, YON puede componer cuatro capas distintas:
+
+`UNIVERSAL PRODUCT MODEL → BUSINESS GRAPH → EVENT ENGINE → POLICY / AGENT SYSTEM`
+
+- **Business Graph** — entiende relaciones significativas entre participantes, recursos, contextos y workflows.
+- **Event Engine** — registra ocurrencias significativas y coordina reacciones.
+- **Policy** — define condiciones de decisión, aprobación, denegación, escalamiento o bloqueo.
+- **Agent System** — permite que agentes observen, razonen y actúen dentro de límites explícitos.
+
+Estas capas no son arquitectura obligatoria. Se usan solo cuando mejoran el resultado del producto.
+
+Distinciones fundamentales:
+
+`ACTION ≠ EVENT`
+
+`RELATIONSHIP ≠ AUTHORIZATION`
+
+`TOOL AVAILABILITY ≠ AUTHORITY`
+
+`MODEL CAPABILITY ≠ AUTONOMY`
+
+`POLICY DECISION ≠ EXECUTION`
+
+La autonomía de agentes se expresa como:
+
+`1 Observer → 2 Assistant → 3 Operator → 4 Bounded Autonomous`
+
+Mayor capacidad del modelo no implica mayor autoridad.
+
 ## Descubrimiento, composición, Blueprint y ejecución
 
 YON separa **descubrir**, **resolver**, **definir el contrato de construcción**, **planificar**, **orquestar** y **ejecutar**.
 
 El flujo para productos amplios es:
 
-`PROBLEMA → BUSINESS DISCOVERY → UNIVERSAL MODEL → DISCOVERY → RESOLUTION → BLUEPRINT → EXECUTION PLAN → ENVIRONMENT → ORCHESTRATION → EXECUTION → VERIFICACIÓN`
+`PROBLEMA → BUSINESS DISCOVERY → UNIVERSAL MODEL → GRAPH/EVENT/POLICY/AGENT CONTEXT → DISCOVERY → RESOLUTION → BLUEPRINT → EXECUTION PLAN → ENVIRONMENT → ORCHESTRATION → EXECUTION → VERIFICACIÓN`
 
 `yon-business-discovery` entiende el modelo operativo del negocio.
 
@@ -97,6 +133,8 @@ El flujo para productos amplios es:
 `yon-execution-plan` transforma el Blueprint en slices verticales, dependencias, criterios de aceptación, riesgos, checkpoints y bloqueos explícitos.
 
 `yon-environment` reconoce el entorno real antes de que YON dependa de una herramienta concreta.
+
+`yon-tool-registry` resuelve el estado de los adapters a partir de evidencia del entorno.
 
 `yon-orchestrate` conecta cada slice con la herramienta concreta que pueda producir la evidencia necesaria.
 
@@ -114,25 +152,19 @@ La capa `environment/` permite que YON responda antes de actuar:
 6. ¿Qué evidencia respalda cada conclusión?
 7. ¿Qué sigue bloqueado o desconocido?
 
-Flujo:
-
-`DETECT PROJECT → DETECT STACK → DETECT TOOLS → DETECT AUTHORITY → BUILD PROFILE → FEED REGISTRY`
-
 Estados de disponibilidad:
 
 `UNKNOWN | SIGNALLED | AVAILABLE | UNAVAILABLE | UNAUTHORIZED | DEGRADED`
 
 Regla de precedencia:
 
-`actual availability > local instructions/config > manifests/scripts > generic assumptions`
+`ACTUAL > AUTHORIZED > CONFIGURED > SIGNALLED > ASSUMED`
 
 Regla fundamental:
 
 `DOCUMENTED ≠ AVAILABLE`
 
 El detector `scripts/detect_environment.py` es portable y de solo lectura. No imprime secretos ni variables de entorno completas. La detección tampoco instala, despliega, migra ni modifica producción.
-
-Referencia: `environment/README.md`, `environment/DETECTION-RULES.md` y `environment/ENVIRONMENT-PROFILE-TEMPLATE.md`.
 
 ## Tool & Execution Orchestration
 
@@ -178,6 +210,10 @@ Las capabilities representan soluciones de producto generalizables. Ejemplos:
 - documents
 - payment tracking
 - audit history
+- business graph / relationship context
+- event-driven coordination
+- agentic operations & bounded autonomy
+- policy & decision boundaries
 
 Una solución de un proyecto privado puede inspirar una capability pública, pero solo después de generalizarla deliberadamente.
 
@@ -199,7 +235,7 @@ Estados de evidencia:
 
 ## Validación continua
 
-`scripts/validate_yon.py` valida la estructura del sistema, incluyendo plugin, skills, commands, agents, environment y orchestration.
+`scripts/validate_yon.py` valida la estructura del sistema, incluyendo plugin, skills, commands, agents, environment, orchestration, graph/event/agent y policy contracts.
 
 GitHub Actions ejecuta el validador en push y pull request mediante `.github/workflows/validate.yml`.
 
@@ -218,32 +254,23 @@ El conocimiento generalizable puede evolucionar en YON; el material privado perm
 discovery/
 model/
 environment/
-├── README.md
-├── DETECTION-RULES.md
-└── ENVIRONMENT-PROFILE-TEMPLATE.md
+orchestration/
+events/
+policy/
 skills/
-├── yon/
-├── yon-environment/
-├── yon-execution-plan/
-├── yon-orchestrate/
-├── yon-execute/
-└── ...
 commands/
 ag​ents/
 blueprints/
 execution/
-orchestration/
 capabilities/
 patterns/
 evidence/
 validation/
 adapters/
 scripts/
-├── detect_environment.py
-└── validate_yon.py
 .github/workflows/validate.yml
 ```
 
 ## Estado
 
-YON está en evolución. Las capabilities y patterns usan estados de madurez para diferenciar ideas de soluciones con evidencia. La detección de entorno y la orquestación agregan una capa operacional para que YON pueda trabajar sobre proyectos reales sin inventar herramientas, permisos o resultados.
+YON está en evolución. Las capabilities y patterns usan estados de madurez para diferenciar ideas de soluciones con evidencia. La detección de entorno, el Tool Registry, la orquestación, el Business Graph, el Event Engine, Policy y el Agent System agregan capas operacionales y de razonamiento para que YON pueda trabajar sobre productos reales sin inventar herramientas, permisos, relaciones, eventos, decisiones o resultados.
