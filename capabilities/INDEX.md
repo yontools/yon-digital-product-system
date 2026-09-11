@@ -21,12 +21,15 @@ Classifications produced by Discovery/Resolver:
 | Party & Relationship Management | `party-relationship-management.md` | experimental | identity, relationships, organizations, participants, memberships |
 | Asset Management | `asset-management.md` | experimental | assets, operations |
 | Audit History | `audit-history.md` | experimental | operations, compliance, debugging, security |
+| Business Graph & Relationship Context | conceptual layer | experimental | relationships, context, routing, agents |
+| Event-driven Coordination | conceptual layer | experimental | events, workflows, reactions, automation |
 | Geolocation & Tracking | `geolocation-tracking.md` | experimental | location, tracking, field operations |
 | Notification Orchestration | `notification-orchestration.md` | experimental | notifications, operations, communication |
 | Rental Management | `rental-management.md` | experimental | rentals, resources, operations |
 | Roles & Permissions | `roles-permissions.md` | experimental | security, authorization, teams, SaaS |
 | Temporal States & Expiration | `temporal-states-expiration.md` | experimental | time, lifecycle, deadlines |
 | Workflow Engine | `workflow-engine.md` | experimental | workflows, operations, lifecycle |
+| Agentic Operations & Bounded Autonomy | conceptual layer | experimental | AI agents, automation, tools, approvals |
 
 ## Discovery rules
 
@@ -40,6 +43,16 @@ Classifications produced by Discovery/Resolver:
 ## Relationship principle
 
 Participants are reusable across contexts; roles and relationships are contextual. Authorization remains a separate concern. Domain capabilities should reference participants rather than duplicate participant semantics.
+
+## Graph, events, and agents
+
+These three concepts are related but must remain distinct:
+
+- **Business Graph** provides relationship context.
+- **Event Engine** records meaningful occurrences and coordinates reactions.
+- **Agent System** provides bounded decision and action behavior.
+
+None of them independently grants authorization or dictates technical architecture.
 
 ## Privacy
 
