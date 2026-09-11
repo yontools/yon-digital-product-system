@@ -116,7 +116,7 @@ def check_terms(contract_map: dict[str, tuple[str, ...]], label: str) -> None:
 
 def check_environment_contract() -> None:
     check_terms({
-        "environment/README.md": ("Environment Profile", "DOCUMENTED ≠ AVAILABLE", "UNAUTHORIZED", "Privacy"),
+        "environment/README.md": ("Environment Profile", "DOCUMENTED ≠ AVAILABLE", "UNAUTHORIZED", "Privacidad"),
         "environment/DETECTION-RULES.md": ("Project detection", "Tool detection", "Authority detection", "Conflict resolution"),
         "environment/ENVIRONMENT-PROFILE-TEMPLATE.md": ("Stack signals", "Tool adapters", "Authority", "Blockers", "Privacy"),
         "environment/TOOL-REGISTRY-BRIDGE.md": ("ACTUAL", "CONFIGURED", "SIGNALLED", "UNKNOWN", "Drift", "Privacy"),
