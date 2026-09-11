@@ -102,8 +102,20 @@ def check_knowledge_directories() -> None:
             fail(f"missing knowledge README: {directory}/README.md")
 
 
+def check_terms(contract_map: dict[str, tuple[str, ...]], label: str) -> None:
+    """Check required contract markers without making prose casing significant."""
+    for rel, terms in contract_map.items():
+        path = ROOT / rel
+        if not path.is_file():
+            continue
+        text = read_text(path).casefold()
+        for term in terms:
+            if term.casefold() not in text:
+                fail(f"{label} contract missing '{term}' in {rel}")
+
+
 def check_environment_contract() -> None:
-    required_terms = {
+    check_terms({
         "environment/README.md": ("Environment Profile", "DOCUMENTED ≠ AVAILABLE", "UNAUTHORIZED", "Privacy"),
         "environment/DETECTION-RULES.md": ("Project detection", "Tool detection", "Authority detection", "Conflict resolution"),
         "environment/ENVIRONMENT-PROFILE-TEMPLATE.md": ("Stack signals", "Tool adapters", "Authority", "Blockers", "Privacy"),
@@ -113,37 +125,21 @@ def check_environment_contract() -> None:
         "commands/yon-environment.md": ("Environment Profile", "read-only", "BLOCKED"),
         "commands/yon-tool-registry.md": ("Environment Profile", "BLOCKED", "secrets"),
         "scripts/detect_environment.py": ("secret_values_read", "tool_states", "authorization"),
-    }
-    for rel, terms in required_terms.items():
-        path = ROOT / rel
-        if not path.is_file():
-            continue
-        text = read_text(path)
-        for term in terms:
-            if term not in text:
-                fail(f"environment contract missing '{term}' in {rel}")
+    }, "environment")
 
 
 def check_orchestration_contract() -> None:
-    required_terms = {
+    check_terms({
         "orchestration/README.md": ("SELECT TOOL", "AUTHORIZE", "OBSERVE", "BLOCKED", "Environment Profile"),
         "orchestration/TOOL-CAPABILITY-REGISTRY.md": ("DOCUMENTED ≠ AVAILABLE", "availability_status", "risk"),
         "orchestration/TOOL-CAPABILITY-MATRIX.md": ("Minimum evidence", "Fallback policy", "No-tool rule"),
         "orchestration/TOOL-ADAPTER-TEMPLATE.md": ("Inputs", "Outputs", "Risk", "Privacy"),
         "skills/yon-orchestrate/SKILL.md": ("DECIDE", "SELECT", "AUTHORIZE", "EXECUTE", "OBSERVE", "DECIDE NEXT", "yon-tool-registry"),
-    }
-    for rel, terms in required_terms.items():
-        path = ROOT / rel
-        if not path.is_file():
-            continue
-        text = read_text(path)
-        for term in terms:
-            if term not in text:
-                fail(f"orchestration contract missing '{term}' in {rel}")
+    }, "orchestration")
 
 
 def check_graph_event_agent_contract() -> None:
-    required_terms = {
+    check_terms({
         "model/BUSINESS-GRAPH.md": ("Business Graph", "Relationship types", "Provenance", "Temporal graph", "Implementation neutrality", "Privacy"),
         "events/README.md": ("Event Engine", "Commands versus events", "idempotent", "retry", "Privacy"),
         "events/EVENT-CONTRACT-TEMPLATE.md": ("Event identity", "Correlation ID", "Causation ID", "Idempotency identity", "Final result"),
@@ -152,34 +148,18 @@ def check_graph_event_agent_contract() -> None:
         "skills/yon-agent-system/SKILL.md": ("BUSINESS GRAPH", "EVENT ENGINE", "MODEL CAPABILITY ≠ TOOL ACCESS", "BLOCKED", "verification"),
         "commands/yon-agent-system.md": ("autonomy", "approval", "BLOCKED", "verification"),
         "capabilities/INDEX.md": ("Business Graph", "Event-driven Coordination", "Agentic Operations", "Graph, events, and agents"),
-    }
-    for rel, terms in required_terms.items():
-        path = ROOT / rel
-        if not path.is_file():
-            continue
-        text = read_text(path)
-        for term in terms:
-            if term not in text:
-                fail(f"graph/event/agent contract missing '{term}' in {rel}")
+    }, "graph/event/agent")
 
 
 def check_policy_contract() -> None:
-    required_terms = {
+    check_terms({
         "policy/README.md": ("Policy & Decision Boundaries", "ALLOW", "DENY", "REQUIRE_APPROVAL", "BLOCKED", "NOT_APPLICABLE", "Privacy"),
         "policy/POLICY-CONTRACT-TEMPLATE.md": ("Conditions", "Decision", "Approval authority", "Failure behavior", "Verification"),
         "skills/yon-policy/SKILL.md": ("CONTEXT → POLICY → DECISION", "AUTHENTICATION ≠ ROLE", "BLOCKED", "verification"),
         "commands/yon-policy.md": ("allow", "approval", "BLOCKED", "verification"),
         "capabilities/INDEX.md": ("Policy & Decision Boundaries", "Graph, events, agents, and policy"),
         "YON.md": ("Policy", "POLICY DECISION ≠ EXECUTION"),
-    }
-    for rel, terms in required_terms.items():
-        path = ROOT / rel
-        if not path.is_file():
-            continue
-        text = read_text(path)
-        for term in terms:
-            if term not in text:
-                fail(f"policy contract missing '{term}' in {rel}")
+    }, "policy")
 
 
 def main() -> int:
