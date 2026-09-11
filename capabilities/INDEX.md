@@ -30,6 +30,7 @@ Classifications produced by Discovery/Resolver:
 | Temporal States & Expiration | `temporal-states-expiration.md` | experimental | time, lifecycle, deadlines |
 | Workflow Engine | `workflow-engine.md` | experimental | workflows, operations, lifecycle |
 | Agentic Operations & Bounded Autonomy | conceptual layer | experimental | AI agents, automation, tools, approvals |
+| Policy & Decision Boundaries | conceptual layer | experimental | policy, approvals, authorization boundaries, agents, automation |
 
 ## Discovery rules
 
@@ -44,12 +45,13 @@ Classifications produced by Discovery/Resolver:
 
 Participants are reusable across contexts; roles and relationships are contextual. Authorization remains a separate concern. Domain capabilities should reference participants rather than duplicate participant semantics.
 
-## Graph, events, and agents
+## Graph, events, agents, and policy
 
-These three concepts are related but must remain distinct:
+These concepts are related but must remain distinct:
 
 - **Business Graph** provides relationship context.
 - **Event Engine** records meaningful occurrences and coordinates reactions.
+- **Policy** defines decision boundaries and approval conditions.
 - **Agent System** provides bounded decision and action behavior.
 
 None of them independently grants authorization or dictates technical architecture.
