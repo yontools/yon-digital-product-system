@@ -54,6 +54,34 @@ Fix regressions and incomplete states. Do not stop at the first successful build
 ### 9. VERIFY
 Confirm the original goal was achieved and existing important behavior still works.
 
+## Product context layers
+
+For broad or AI-native products, YON can compose four distinct reasoning layers:
+
+`UNIVERSAL PRODUCT MODEL → BUSINESS GRAPH → EVENT ENGINE → POLICY / AGENT SYSTEM`
+
+They answer different questions:
+
+- **Universal Product Model:** what participants, resources, actions, states, workflows and boundaries matter?
+- **Business Graph:** how are meaningful participants, resources and contexts related?
+- **Event Engine:** what meaningful occurrences happened and what reactions may follow?
+- **Policy:** under what conditions is an action allowed, denied, approved, or blocked?
+- **Agent System:** who/what can reason and act within those boundaries?
+
+These are conceptual layers, not a mandatory architecture. A product should use only the layers that materially improve its outcome.
+
+Critical distinctions:
+
+`ACTION ≠ EVENT`
+
+`RELATIONSHIP ≠ AUTHORIZATION`
+
+`TOOL AVAILABILITY ≠ AUTHORITY`
+
+`MODEL CAPABILITY ≠ AUTONOMY`
+
+`POLICY DECISION ≠ EXECUTION`
+
 ## Environment awareness
 
 Before YON chooses concrete tools in an unfamiliar or partially known project, it can build an **Environment Profile** with `yon-environment`.
@@ -70,7 +98,7 @@ The environment layer answers:
 
 The flow is:
 
-`DETECT PROJECT → DETECT STACK → DETECT TOOLS → DETECT AUTHORITY → BUILD PROFILE → ORCHESTRATE`
+`DETECT PROJECT → DETECT STACK → DETECT TOOLS → DETECT AUTHORITY → BUILD PROFILE → TOOL REGISTRY → ORCHESTRATE`
 
 Availability states are:
 
