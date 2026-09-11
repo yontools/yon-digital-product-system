@@ -147,7 +147,7 @@ def check_graph_event_agent_contract() -> None:
         "agents/AGENT-PROFILE-TEMPLATE.md": ("Autonomy", "Approval thresholds", "Stop conditions", "Verification"),
         "skills/yon-agent-system/SKILL.md": ("BUSINESS GRAPH", "EVENT ENGINE", "MODEL CAPABILITY ≠ TOOL ACCESS", "BLOCKED", "verification"),
         "commands/yon-agent-system.md": ("autonomy", "approval", "BLOCKED", "verification"),
-        "capabilities/INDEX.md": ("Business Graph", "Event-driven Coordination", "Agentic Operations", "Graph, events, and agents"),
+        "capabilities/INDEX.md": ("Business Graph", "Event-driven Coordination", "Agentic Operations", "Graph, events, agents, and policy"),
     }, "graph/event/agent")
 
 
