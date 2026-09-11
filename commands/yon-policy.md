@@ -22,6 +22,8 @@ Define or review a policy and decision boundary for a consequential product beha
 - High-risk actions require explicit policy and proportional verification.
 - `BLOCKED` is never `ALLOW`.
 
+The command must explicitly distinguish `allow`, `deny`, `approval`, and `blocked` outcomes when documenting a decision boundary.
+
 ## Output
 
 Return the policy contract, decision boundary, affected workflows, verification gates, unresolved blockers, and next implementation step.
