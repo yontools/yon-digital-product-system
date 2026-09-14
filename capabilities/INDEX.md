@@ -21,16 +21,16 @@ Classifications produced by Discovery/Resolver:
 | Party & Relationship Management | `party-relationship-management.md` | experimental | identity, relationships, organizations, participants, memberships |
 | Asset Management | `asset-management.md` | experimental | assets, operations |
 | Audit History | `audit-history.md` | experimental | operations, compliance, debugging, security |
-| Business Graph & Relationship Context | conceptual layer | experimental | relationships, context, routing, agents |
-| Event-driven Coordination | conceptual layer | experimental | events, workflows, reactions, automation |
+| Business Graph & Relationship Context | `model/BUSINESS-GRAPH.md` | experimental | relationships, context, routing, agents |
+| Event-driven Coordination | `model/EVENT-ENGINE.md` | experimental | events, workflows, reactions, automation |
 | Geolocation & Tracking | `geolocation-tracking.md` | experimental | location, tracking, field operations |
 | Notification Orchestration | `notification-orchestration.md` | experimental | notifications, operations, communication |
 | Rental Management | `rental-management.md` | experimental | rentals, resources, operations |
 | Roles & Permissions | `roles-permissions.md` | experimental | security, authorization, teams, SaaS |
 | Temporal States & Expiration | `temporal-states-expiration.md` | experimental | time, lifecycle, deadlines |
 | Workflow Engine | `workflow-engine.md` | experimental | workflows, operations, lifecycle |
-| Agentic Operations & Bounded Autonomy | conceptual layer | experimental | AI agents, automation, tools, approvals |
-| Policy & Decision Boundaries | conceptual layer | experimental | policy, approvals, authorization boundaries, agents, automation |
+| Agentic Operations & Bounded Autonomy | `model/AGENT-SYSTEM.md` | experimental | AI agents, automation, tools, approvals |
+| Policy & Decision Boundaries | `model/POLICY.md` | experimental | policy, approvals, authorization boundaries, agents, automation |
 
 ## Discovery rules
 
